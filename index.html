@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Yijia Zhao 的个人学术主页，研究方向为几何表示论、代数几何与表示论。">
-  <meta name="site-version" content="2026-09-23-public-notes-v3">
+  <meta name="site-version" content="2026-09-23-directory-v6">
   <title>Yijia Zhao · Mathematics</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%237dd3fc'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%230369a1' stroke-width='3'/%3E%3Cpath d='M18 40 32 17 46 40Z' fill='none' stroke='%23ffffff' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
   <style>
@@ -23,20 +23,21 @@
     .nav-control{display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:36px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.78);color:var(--cyan);font:700 .8rem/1 ui-sans-serif,system-ui;cursor:pointer}.nav-control:hover,.nav-control:focus-visible,.nav-control[aria-pressed="true"]{background:var(--cyan);border-color:var(--cyan);color:#fff;outline:none}
     .notes-intro{max-width:780px;margin:-24px 0 32px;color:var(--muted);font-size:1.05rem}.notes-toolbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:26px;flex-wrap:wrap}.note-filters,.note-owner-actions{display:flex;gap:9px;flex-wrap:wrap}.filter-button,.note-action,.note-download{border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.82);color:var(--text);padding:9px 14px;font:650 .85rem/1 ui-sans-serif,system-ui;cursor:pointer}.filter-button:hover,.filter-button:focus-visible,.filter-button.active,.note-action:hover,.note-action:focus-visible,.note-download:hover,.note-download:focus-visible{background:var(--cyan);border-color:var(--cyan);color:#fff;outline:none}.notes-help{margin:-10px 0 28px;padding:18px 20px;border-left:3px solid var(--cyan);background:rgba(255,255,255,.72);color:var(--muted)}.notes-help[hidden]{display:none}.notes-help code{color:var(--text)}.notes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.note-card{display:flex;min-height:245px;flex-direction:column;justify-content:space-between;padding:26px;border:1px solid #78c6eb;background:linear-gradient(145deg,rgba(255,255,255,.95),rgba(205,237,255,.88));box-shadow:0 18px 44px rgba(2,132,199,.09);transition:.25s}.note-card:hover{transform:translateY(-4px);box-shadow:0 22px 52px rgba(2,132,199,.15)}.note-card[hidden]{display:none}.note-category{color:var(--cyan);font:600 .76rem ui-monospace,monospace;letter-spacing:.09em}.note-card h3{font:400 1.55rem/1.25 Georgia,serif;margin:22px 0 8px}.note-card p{margin:0;color:var(--muted)}.note-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:28px}.note-status{color:var(--muted);font-size:.8rem}.note-download.unavailable{opacity:.55;cursor:not-allowed}.back-to-top{position:fixed;right:24px;bottom:24px;z-index:20;width:44px;height:44px;border:1px solid var(--cyan);border-radius:50%;background:rgba(255,255,255,.9);color:var(--cyan);font-size:1.2rem;cursor:pointer;box-shadow:0 10px 28px rgba(2,132,199,.18);opacity:0;pointer-events:none;transform:translateY(8px);transition:.2s}.back-to-top.visible{opacity:1;pointer-events:auto;transform:none}.back-to-top:hover,.back-to-top:focus-visible{background:var(--cyan);color:#fff;outline:none}.background-off .math-background{display:none}
     .contact{display:flex;justify-content:space-between;align-items:end;gap:40px}.contact h2{font:400 clamp(3rem,7vw,7rem)/.95 Georgia,serif;margin:0;max-width:780px}.contact h2 span{color:var(--cyan)}.contact-info{display:grid;gap:12px;min-width:min(100%,390px)}.contact-info p{color:var(--muted);margin:0 0 8px}.email-row{display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid var(--line);padding:9px 0}.email-address{color:var(--text);overflow-wrap:anywhere}.copy-button{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.72);color:var(--cyan);padding:7px 12px;min-width:66px;font:650 .82rem/1 ui-sans-serif,system-ui;cursor:pointer}.copy-button:hover,.copy-button:focus-visible{border-color:var(--cyan);background:rgba(186,230,253,.58);outline:none}.copy-button.copied{background:var(--cyan);border-color:var(--cyan);color:#fff}footer{padding:28px 0;color:#52758a;border-top:1px solid var(--line);font-size:.85rem;display:flex;justify-content:space-between}
-    .note-owner-actions,#backgroundToggle{display:none!important}.public-controls{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 26px;flex-wrap:wrap}.public-search{flex:1 1 300px;max-width:520px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.86);color:var(--text);padding:11px 16px;font:500 .92rem/1.2 ui-sans-serif,system-ui}.public-search:focus{border-color:var(--cyan);outline:3px solid rgba(2,132,199,.12)}.public-button{border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.82);color:var(--text);padding:9px 14px;font:650 .85rem/1 ui-sans-serif,system-ui;cursor:pointer}.public-button:hover,.public-button:focus-visible,.public-button.active{background:var(--cyan);border-color:var(--cyan);color:#fff;outline:none}.research-public-controls{display:flex;justify-content:flex-end;gap:9px;margin:-24px 0 24px}.topics.compact .topic p{display:none}.topics.compact .topic{min-height:150px}.notes-empty{padding:28px;border:1px dashed var(--line);color:var(--muted);text-align:center}.notes-empty[hidden]{display:none}.page-toc{position:fixed;left:14px;top:50%;z-index:30;width:128px;transform:translateY(-50%);padding:10px;border:1px solid rgba(130,201,237,.85);border-radius:18px;background:rgba(246,252,255,.9);box-shadow:0 16px 42px rgba(2,132,199,.13);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}.toc-toggle{width:100%;border:0;border-radius:11px;background:transparent;color:var(--cyan);padding:8px;font:700 .78rem/1 ui-sans-serif,system-ui;cursor:pointer}.toc-toggle:hover,.toc-toggle:focus-visible{background:rgba(125,211,252,.28);outline:none}.toc-links{display:grid;gap:5px;margin-top:5px}.toc-links a{display:block;border-radius:10px;padding:7px 9px;color:var(--muted);font-size:.82rem}.toc-links a:hover,.toc-links a:focus-visible,.toc-links a.active{background:var(--cyan);color:#fff;outline:none}.page-toc.collapsed{width:48px;padding:6px}.page-toc.collapsed .toc-links{display:none}.page-toc.collapsed .toc-toggle{font-size:0}.page-toc.collapsed .toc-toggle:after{content:'☰';font-size:1rem}
+    .note-owner-actions,#backgroundToggle{display:none!important}.public-controls{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 26px;flex-wrap:wrap}.public-search{flex:1 1 300px;max-width:520px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.86);color:var(--text);padding:11px 16px;font:500 .92rem/1.2 ui-sans-serif,system-ui}.public-search:focus{border-color:var(--cyan);outline:3px solid rgba(2,132,199,.12)}.public-button{border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.82);color:var(--text);padding:9px 14px;font:650 .85rem/1 ui-sans-serif,system-ui;cursor:pointer}.public-button:hover,.public-button:focus-visible,.public-button.active{background:var(--cyan);border-color:var(--cyan);color:#fff;outline:none}.research-public-controls{display:flex;justify-content:flex-end;gap:9px;margin:-24px 0 24px}.topics.compact .topic p{display:none}.topics.compact .topic{min-height:150px}.notes-empty{padding:28px;border:1px dashed var(--line);color:var(--muted);text-align:center}.notes-empty[hidden]{display:none}.page-toc{box-sizing:border-box;position:fixed;left:14px;top:50%;z-index:30;width:150px;max-height:calc(100vh - 32px);overflow:hidden;transform:translateY(-50%);padding:10px;border:1px solid rgba(130,201,237,.95);border-radius:18px;background:rgba(246,252,255,.94);box-shadow:0 16px 42px rgba(2,132,199,.13);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}.toc-toggle{width:100%;border:0;border-radius:11px;background:transparent;color:var(--cyan);padding:8px;font:700 .78rem/1 ui-sans-serif,system-ui;cursor:pointer}.toc-toggle:hover,.toc-toggle:focus-visible{background:rgba(125,211,252,.28);outline:none}.toc-links{display:grid;gap:5px;margin:5px 0 0}.toc-links a{display:block;width:100%;white-space:nowrap;border-radius:10px;padding:7px 9px;color:var(--muted);font-size:.82rem}.toc-links a:hover,.toc-links a:focus-visible,.toc-links a.active{background:var(--cyan);color:#fff;outline:none}.toc-jumps{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:9px;padding-top:9px;border-top:1px solid var(--line)}.toc-jump{border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.82);color:var(--cyan);padding:7px 4px;font:650 .75rem/1 ui-sans-serif,system-ui;cursor:pointer}.toc-jump:hover,.toc-jump:focus-visible{background:var(--cyan);border-color:var(--cyan);color:#fff;outline:none}.page-toc.collapsed{width:48px;padding:6px}.page-toc.collapsed .toc-links,.page-toc.collapsed .toc-jumps{display:none}.page-toc.collapsed .toc-toggle{font-size:0}.page-toc.collapsed .toc-toggle:after{content:'☰';font-size:1rem}
     @media(max-width:900px){.notes-grid{grid-template-columns:1fr 1fr}}
-    @media(max-width:1250px){.page-toc{width:48px;padding:6px}.page-toc .toc-links{display:none}.page-toc .toc-toggle{font-size:0}.page-toc .toc-toggle:after{content:'☰';font-size:1rem}.page-toc.open{width:160px;padding:10px}.page-toc.open .toc-links{display:grid}.page-toc.open .toc-toggle{font-size:.78rem}.page-toc.open .toc-toggle:after{content:''}}
+    .toc-header{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:3px 3px 7px 9px;border-bottom:1px solid var(--line)}.toc-title{color:var(--cyan);font:700 .78rem/1 ui-sans-serif,system-ui}.toc-collapse{display:grid;place-items:center;width:25px;height:25px;border:0;border-radius:8px;background:transparent;color:var(--cyan);font-size:1rem;cursor:pointer}.toc-collapse:hover,.toc-collapse:focus-visible{background:rgba(125,211,252,.28);outline:none}.toc-expand{display:none;width:36px;height:36px;border:0;border-radius:12px;background:transparent;color:var(--cyan);font-size:1rem;cursor:pointer}.toc-expand:hover,.toc-expand:focus-visible{background:rgba(125,211,252,.28);outline:none}.jump-glyph{display:block;width:18px;height:18px;margin:auto;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.jump-glyph.top{transform:rotate(-90deg)}.jump-glyph.bottom{transform:rotate(90deg)}.page-toc.collapsed .toc-header,.page-toc.collapsed .toc-links,.page-toc.collapsed .toc-jumps{display:none}.page-toc.collapsed .toc-expand{display:block}.page-toc:not(.collapsed) .toc-expand{display:none}
+    @media(max-width:1250px){.page-toc{width:170px;padding:10px}.page-toc.collapsed{width:48px;padding:6px}}
     @media(max-width:760px){.shell{width:min(100% - 28px,var(--max))}.navlinks{display:none}.nav-actions{gap:8px}.mark{font-size:.92rem}.hero{grid-template-columns:1fr;padding:70px 0}.orbit{display:none}.interest-bar header{align-items:start;flex-direction:column;gap:8px}.sectionhead,.about{grid-template-columns:1fr}.sectionhead{gap:18px}.topics,.notes-grid{grid-template-columns:1fr}.topic{min-height:200px}.contact{align-items:start;flex-direction:column}footer{gap:15px;flex-direction:column}.facts{grid-template-columns:1fr}.hero h1{font-size:clamp(3.7rem,19vw,6rem)}.back-to-top{right:14px;bottom:14px}.page-toc{left:8px}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.orbit:before,.orbit:after{animation:none}.button,.topic{transition:none}}
   </style>
 </head>
 <body>
-  <aside class="page-toc" id="pageToc" aria-label="页面目录"><button class="toc-toggle" id="tocToggle" type="button" aria-expanded="true" data-zh="页面目录" data-en="Contents">页面目录</button><nav class="toc-links" aria-label="页内导航"><a href="#top" data-section="top" data-zh="首页" data-en="Home">首页</a><a href="#about" data-section="about" data-zh="关于" data-en="About">关于</a><a href="#research" data-section="research" data-zh="研究" data-en="Research">研究</a><a href="#notes" data-section="notes" data-zh="笔记" data-en="Notes">笔记</a><a href="#contact" data-section="contact" data-zh="联系" data-en="Contact">联系</a></nav></aside>
+  <aside class="page-toc" id="pageToc" aria-label="页面目录"><div class="toc-header"><span class="toc-title" data-zh="页面目录" data-en="Contents">页面目录</span><button class="toc-collapse" id="tocCollapse" type="button" aria-label="收起目录">−</button></div><button class="toc-expand" id="tocExpand" type="button" aria-label="展开目录" aria-expanded="false">☰</button><nav class="toc-links" aria-label="页内导航"><a href="#top" data-section="top" data-zh="首页" data-en="Home">首页</a><a href="#about" data-section="about" data-zh="关于" data-en="About">关于</a><a href="#research" data-section="research" data-zh="研究" data-en="Research">研究</a><a href="#notes" data-section="notes" data-zh="笔记" data-en="Notes">笔记</a><a href="#contact" data-section="contact" data-zh="联系" data-en="Contact">联系</a></nav><div class="toc-jumps"><button class="toc-jump" id="jumpTop" type="button" aria-label="返回页面顶部"><svg class="jump-glyph top" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 1V15M6 1L14 8L6 15"/></svg></button><button class="toc-jump" id="jumpBottom" type="button" aria-label="前往页面底部"><svg class="jump-glyph bottom" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 1V15M6 1L14 8L6 15"/></svg></button></div></aside>
   <canvas class="math-background" id="ellipticBackground" aria-hidden="true"></canvas>
   <div class="shell">
-    <nav aria-label="主导航"><a class="mark" href="#top" data-zh="赵翌嘉" data-en="Yijia Zhao">赵翌嘉</a><div class="nav-actions"><div class="navlinks"><a href="#about" data-zh="关于" data-en="About">关于</a><a href="#research" data-zh="研究" data-en="Research">研究</a><a href="#notes" data-zh="笔记" data-en="Notes">笔记</a><a href="#contact" data-zh="联系" data-en="Contact">联系</a></div><button class="nav-control" id="backgroundToggle" type="button" aria-label="隐藏数学背景" aria-pressed="false" title="数学背景">∿</button><button class="lang-switch" id="langSwitch" type="button" aria-label="Switch to English"><strong>中文</strong><span>/</span><strong>EN</strong></button></div></nav>
-    <main id="top">
-      <header class="hero">
+    <nav aria-label="主导航"><span class="mark" data-zh="赵翌嘉" data-en="Yijia Zhao">赵翌嘉</span><div class="nav-actions"><button class="nav-control" id="backgroundToggle" type="button" aria-label="隐藏数学背景" aria-pressed="false" title="数学背景">∿</button><button class="lang-switch" id="langSwitch" type="button" aria-label="Switch to English"><strong>中文</strong><span>/</span><strong>EN</strong></button></div></nav>
+    <main>
+      <header class="hero" id="top">
         <div><div class="eyebrow" data-zh="基础数学 · 几何表示论" data-en="Pure Mathematics · Geometric Representation Theory">基础数学 · 几何表示论</div><h1 data-zh-html="&lt;i&gt;赵&lt;/i&gt;翌嘉" data-en-html="Yijia&lt;i&gt;Zhao&lt;/i&gt;"><i>赵</i>翌嘉</h1><p class="lead" data-zh="我的主要研究兴趣是几何表示论，即运用代数几何的方法研究表示论问题。我尤其关注几何 Satake 等价、Hikita 猜想与几何 Langlands 纲领，并对仿射 Grassmannian、反常层、Springer 理论及其相互联系感兴趣。" data-en="My primary research interest is geometric representation theory: the study of representation-theoretic questions through methods from algebraic geometry. I am particularly interested in the geometric Satake equivalence, the Hikita conjecture, and the geometric Langlands program, together with affine Grassmannians, perverse sheaves, Springer theory, and the relationships among them.">我的主要研究兴趣是几何表示论，即运用代数几何的方法研究表示论问题。我尤其关注几何 Satake 等价、Hikita 猜想与几何 Langlands 纲领，并对仿射 Grassmannian、反常层、Springer 理论及其相互联系感兴趣。</p><div class="actions"><a class="button primary" href="#research"><span data-zh="查看研究方向" data-en="Explore research">查看研究方向</span> <span aria-hidden="true">↓</span></a><a class="button" href="#notes" data-zh="浏览学习笔记" data-en="Browse notes">浏览学习笔记</a><a class="button" href="#about" data-zh="关于我" data-en="About me">关于我</a></div></div>
         <div class="orbit" aria-hidden="true"><span class="dot"></span><span class="symbol">Gr<sub>G</sub></span></div>
       </header>
@@ -154,7 +155,7 @@
       notesIntro.dataset.zh = '这里公开展示几何表示论、代数几何与表示论相关的学习笔记。访客可以按主题筛选、搜索并下载已经发布的 PDF。';
       notesIntro.dataset.en = 'This section publicly presents study notes in geometric representation theory, algebraic geometry, and representation theory. Visitors can filter, search, and download published PDFs.';
       notesIntro.textContent = notesIntro.dataset.zh;
-      topics.insertAdjacentHTML('beforebegin', '<div class="research-public-controls"><button class="public-button" id="expandResearch" type="button" data-zh="展开说明" data-en="Expand descriptions">展开说明</button><button class="public-button" id="collapseResearch" type="button" data-zh="收起说明" data-en="Collapse descriptions">收起说明</button></div>');
+      topics.insertAdjacentHTML('beforebegin', '<div class="research-public-controls"><button class="public-button" id="toggleResearch" type="button" aria-pressed="false" data-zh="收起说明" data-en="Collapse descriptions">收起说明</button></div>');
       notesSection.querySelector('.notes-toolbar').insertAdjacentHTML('afterend', '<div class="public-controls"><input class="public-search" id="noteSearch" type="search" data-placeholder-zh="搜索笔记标题或内容" data-placeholder-en="Search note titles or descriptions" placeholder="搜索笔记标题或内容"><div><button class="public-button active" id="sortDefault" type="button" data-zh="默认顺序" data-en="Default order">默认顺序</button> <button class="public-button" id="sortTitle" type="button" data-zh="按标题排序" data-en="Sort by title">按标题排序</button></div></div>');
       notesSection.querySelector('.notes-grid').insertAdjacentHTML('afterend', '<div class="notes-empty" id="notesEmpty" hidden data-zh="没有符合条件的笔记。" data-en="No notes match the current filters.">没有符合条件的笔记。</div>');
       const applyLanguage = (lang) => {
@@ -176,6 +177,10 @@
         backToTop.setAttribute('title', lang === 'zh' ? '返回顶部' : 'Back to top');
         const noteSearch = document.getElementById('noteSearch');
         noteSearch.placeholder = lang === 'zh' ? noteSearch.dataset.placeholderZh : noteSearch.dataset.placeholderEn;
+        document.getElementById('jumpTop').setAttribute('aria-label', lang === 'zh' ? '返回页面顶部' : 'Go to the top of the page');
+        document.getElementById('jumpBottom').setAttribute('aria-label', lang === 'zh' ? '前往页面底部' : 'Go to the bottom of the page');
+        document.getElementById('tocCollapse').setAttribute('aria-label', lang === 'zh' ? '收起目录' : 'Collapse contents');
+        document.getElementById('tocExpand').setAttribute('aria-label', lang === 'zh' ? '展开目录' : 'Expand contents');
         localStorage.setItem('site-language', lang);
       };
       let language = localStorage.getItem('site-language') || 'zh';
@@ -240,23 +245,47 @@
         document.getElementById('sortTitle').classList.add('active');
         document.getElementById('sortDefault').classList.remove('active');
       });
-      document.getElementById('expandResearch').addEventListener('click', () => topics.classList.remove('compact'));
-      document.getElementById('collapseResearch').addEventListener('click', () => topics.classList.add('compact'));
+      document.getElementById('toggleResearch').addEventListener('click', (event) => {
+        const compact = topics.classList.toggle('compact');
+        event.currentTarget.setAttribute('aria-pressed', compact ? 'true' : 'false');
+        event.currentTarget.dataset.zh = compact ? '展开说明' : '收起说明';
+        event.currentTarget.dataset.en = compact ? 'Expand descriptions' : 'Collapse descriptions';
+        event.currentTarget.textContent = language === 'zh' ? event.currentTarget.dataset.zh : event.currentTarget.dataset.en;
+      });
 
       const pageToc = document.getElementById('pageToc');
-      const tocToggle = document.getElementById('tocToggle');
-      tocToggle.addEventListener('click', () => {
-        const compactViewport = window.matchMedia('(max-width: 1250px)').matches;
-        const isOpen = compactViewport ? pageToc.classList.toggle('open') : !pageToc.classList.toggle('collapsed');
-        tocToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      });
-      const observedSections = ['top', 'about', 'research', 'notes', 'contact'].map((id) => document.getElementById(id));
-      const tocObserver = new IntersectionObserver((entries) => {
-        const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (!visible) return;
-        document.querySelectorAll('.toc-links a').forEach((link) => link.classList.toggle('active', link.dataset.section === visible.target.id));
-      }, { rootMargin: '-25% 0px -60% 0px', threshold: [0, .1, .25] });
-      observedSections.forEach((section) => tocObserver.observe(section));
+      const tocCollapse = document.getElementById('tocCollapse');
+      const tocExpand = document.getElementById('tocExpand');
+      const setTocCollapsed = (collapsed) => {
+        pageToc.classList.toggle('collapsed', collapsed);
+        tocExpand.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+      };
+      tocCollapse.addEventListener('click', () => setTocCollapsed(true));
+      tocExpand.addEventListener('click', () => setTocCollapsed(false));
+      const compactTocQuery = window.matchMedia('(max-width: 1250px)');
+      setTocCollapsed(compactTocQuery.matches);
+      compactTocQuery.addEventListener('change', (event) => setTocCollapsed(event.matches));
+      document.getElementById('jumpTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+      document.getElementById('jumpBottom').addEventListener('click', () => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' }));
+      const tocSections = ['top', 'about', 'research', 'notes', 'contact'].map((id) => document.getElementById(id));
+      const updateActiveToc = () => {
+        const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 12;
+        const marker = Math.min(window.innerHeight * .34, 280);
+        let activeId = 'top';
+        for (const section of tocSections) {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= marker) activeId = section.id;
+          if (rect.top <= marker && rect.bottom > marker) {
+            activeId = section.id;
+            break;
+          }
+        }
+        if (nearBottom) activeId = 'contact';
+        document.querySelectorAll('.toc-links a').forEach((link) => link.classList.toggle('active', link.dataset.section === activeId));
+      };
+      updateActiveToc();
+      window.addEventListener('scroll', updateActiveToc, { passive: true });
+      window.addEventListener('resize', updateActiveToc);
 
       document.querySelectorAll('.note-download').forEach(async (download) => {
         try {
