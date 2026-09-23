@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="赵翌嘉的个人学术主页，关注几何表示论、几何 Satake 等价、Hikita 猜想与几何 Langlands 纲领。">
-  <meta name="site-version" content="2026-09-23-interaction-v10">
+  <meta name="site-version" content="2026-09-23-copyright-range-v12">
   <title>Yijia Zhao · Mathematics</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%237dd3fc'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%230369a1' stroke-width='3'/%3E%3Cpath d='M18 40 32 17 46 40Z' fill='none' stroke='%23ffffff' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
   <style>
@@ -14,12 +14,15 @@
     */
     :root {
       --ink: #d9f2ff;
-      --panel: rgba(255, 255, 255, .82);
+      --panel: rgba(255, 255, 255, .9);
       --line: #82c9ed;
-      --text: #0d3854;
-      --muted: #37677f;
+      --text: #082f49;
+      --muted: #164e63;
       --cyan: #0077b6;
       --blue: #38bdf8;
+      --diagram-indigo: #4338ca;
+      --diagram-violet: #6d28d9;
+      --diagram-teal: #0f766e;
       --max: 72.5rem;
       --border: clamp(1px, .075vw, 1.5px);
       --space-1: clamp(.35rem, .3rem + .12vw, .48rem);
@@ -113,7 +116,7 @@
     main h2,
     main h3,
     .eyebrow,
-    .kicker { text-shadow: 0 1px 2px rgba(255, 255, 255, .94); }
+    .kicker { text-shadow: 0 1px 3px rgba(255, 255, 255, .98); }
 
     .site-nav {
       position: sticky;
@@ -226,8 +229,7 @@
     .edu-period,
     .fact b,
     .topic .num,
-    .note-category,
-    .langlands-caption {
+    .note-category {
       color: var(--cyan);
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: clamp(.76rem, .72rem + .1vw, .86rem);
@@ -235,8 +237,7 @@
       letter-spacing: .12em;
     }
 
-    .eyebrow,
-    .langlands-caption { text-transform: uppercase; }
+    .eyebrow { text-transform: uppercase; }
 
     .hero h1 {
       margin: var(--space-4) 0 var(--space-5);
@@ -260,7 +261,7 @@
 
     .lead {
       max-width: 43.75rem;
-      color: #284f68;
+      color: #123f59;
       font-size: clamp(1.08rem, 1rem + .35vw, 1.35rem);
       line-height: 1.8;
     }
@@ -282,47 +283,54 @@
     .button.primary { border-color: var(--text); background: var(--text); color: var(--ink); }
     .button:hover { transform: translateY(clamp(-3px, -.15vw, -2px)); }
 
-    .langlands-hero {
+    .hecke-hero {
       position: relative;
-      display: grid;
-      align-content: center;
-      justify-items: center;
-      gap: var(--space-3);
-      min-height: clamp(21rem, 35vw, 27rem);
-      padding: var(--space-6) var(--space-4);
+      isolation: isolate;
+      align-self: center;
+      min-height: clamp(24rem, 38vw, 29rem);
+      padding: clamp(1.05rem, 1rem + .7vw, 1.65rem);
       overflow: hidden;
-      border: clamp(1.2px, .1vw, 1.8px) solid rgba(2, 132, 199, .62);
-      border-radius: 44% 56% 51% 49% / 46% 43% 57% 54%;
-      background: radial-gradient(circle at 50% 42%, rgba(255, 255, 255, .92), rgba(125, 211, 252, .34) 58%, rgba(56, 189, 248, .11) 78%);
-      box-shadow: inset 0 0 clamp(3.5rem, 5vw, 5rem) rgba(2, 132, 199, .14), 0 1.4rem 3.4rem rgba(2, 132, 199, .2);
+      border: clamp(1.2px, .1vw, 1.8px) solid rgba(67, 56, 202, .52);
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, .98), rgba(238, 242, 255, .96) 55%, rgba(204, 251, 241, .88));
+      box-shadow:
+        inset 0 0 clamp(3rem, 4vw, 4.5rem) rgba(67, 56, 202, .08),
+        0 1.4rem 3.4rem rgba(15, 118, 110, .18);
+      transform: translate3d(clamp(.35rem, 1vw, 1rem), clamp(1rem, 2.4vh, 1.8rem), 0);
     }
 
-    .langlands-hero::before,
-    .langlands-hero::after {
+    .hecke-hero::before {
       content: "";
       position: absolute;
-      inset: 10%;
-      border: var(--border) solid rgba(2, 132, 199, .28);
+      inset: auto -16% -31% 42%;
+      z-index: -1;
+      aspect-ratio: 1;
+      border: clamp(1px, .08vw, 1.5px) solid rgba(15, 118, 110, .22);
       border-radius: 50%;
-      transform: rotate(-18deg);
+      box-shadow: 0 0 0 clamp(1.5rem, 3vw, 2.8rem) rgba(67, 56, 202, .05);
     }
 
-    .langlands-hero::after { inset: 20% 4%; border-style: dashed; transform: rotate(23deg); }
-    .langlands-geometry { position: absolute; inset: 5%; width: 90%; height: 90%; color: #0369a1; opacity: .64; }
-    .langlands-geometry .surface { fill: rgba(125, 211, 252, .16); stroke: currentColor; stroke-width: 2.2; }
-    .langlands-geometry .handle,
-    .langlands-geometry .spectral,
-    .langlands-geometry .fiber { fill: none; stroke: currentColor; stroke-width: 1.65; }
-    .langlands-geometry .spectral { stroke-dasharray: 5 5; }
-    .langlands-geometry .marked-point { fill: #0077b6; stroke: #fff; stroke-width: 1.5; }
-    .langlands-object { position: relative; z-index: 2; text-align: center; font-family: Georgia, "Times New Roman", serif; }
-    .math-operator { font-style: normal; letter-spacing: -.025em; }
-    .langlands-object.primary { color: #005f91; font: italic clamp(2.5rem, 4.4vw, 4.8rem)/1 Georgia, serif; text-shadow: 0 .55rem 1.5rem rgba(255, 255, 255, .9), 0 .7rem 2rem rgba(2, 132, 199, .24); }
-    .langlands-object.secondary { color: #123f59; font: italic clamp(1.4rem, 2.2vw, 2.25rem)/1.2 Georgia, serif; text-shadow: 0 .35rem 1rem rgba(255, 255, 255, .95); }
-    .langlands-correspondence { position: relative; z-index: 2; display: flex; align-items: center; gap: var(--space-2); color: #164d6b; font: 650 clamp(.76rem, .7rem + .15vw, .86rem)/1 Georgia, serif; letter-spacing: .03em; }
-    .langlands-caption { position: relative; z-index: 2; }
-    .langlands-line { position: relative; width: clamp(2rem, 3vw, 3rem); height: var(--border); background: var(--cyan); }
-    .langlands-line::after { content: ""; position: absolute; right: 0; top: clamp(-.25rem, -.16rem - .05vw, -.18rem); width: clamp(.34rem, .3rem + .1vw, .45rem); height: clamp(.34rem, .3rem + .1vw, .45rem); border-top: var(--border) solid var(--cyan); border-right: var(--border) solid var(--cyan); transform: rotate(45deg); }
+    .hecke-heading { margin-bottom: var(--space-2); }
+    .hecke-heading strong { display: block; color: #172554; font: 650 clamp(.9rem, .84rem + .18vw, 1.04rem)/1.25 Georgia, "Times New Roman", serif; letter-spacing: .015em; }
+    .hecke-heading span { display: block; margin-top: .18rem; color: #172554; font-size: clamp(.7rem, .67rem + .08vw, .76rem); font-weight: 650; letter-spacing: .07em; text-transform: uppercase; }
+    .hecke-diagram { display: block; width: 100%; height: auto; overflow: visible; }
+    .hecke-diagram text { fill: #172554; text-rendering: geometricPrecision; }
+    .hecke-diagram .formula { font-family: Georgia, "Times New Roman", serif; font-size: 16px; }
+    .hecke-diagram .label,
+    .hecke-diagram .micro { fill: #172554; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 12px; font-weight: 600; }
+    .hecke-diagram .panel { fill: rgba(255, 255, 255, .68); stroke: rgba(99, 102, 241, .23); stroke-width: 1.2; }
+    .hecke-diagram .curve-domain { fill: rgba(224, 231, 255, .58); stroke: var(--diagram-indigo); stroke-width: 2; }
+    .hecke-diagram .lattice-line { fill: none; stroke: rgba(67, 56, 202, .34); stroke-width: 1; }
+    .hecke-diagram .identify-edge { fill: none; stroke: var(--diagram-teal); stroke-width: 2; stroke-linecap: round; }
+    .hecke-diagram .bundle-line { fill: none; stroke: var(--diagram-teal); stroke-width: 2.2; stroke-linecap: round; }
+    .hecke-diagram .modified-line { fill: none; stroke: var(--diagram-indigo); stroke-width: 2.2; stroke-linecap: round; }
+    .hecke-diagram .map-line { fill: none; stroke: #475569; stroke-width: 1.65; stroke-linecap: round; marker-end: url(#heckeArrow); }
+    .hecke-diagram .exact-line { fill: none; stroke: var(--diagram-violet); stroke-width: 1.7; stroke-linecap: round; marker-end: url(#heckeArrowViolet); }
+    .hecke-diagram .marked-point { fill: var(--diagram-violet); stroke: #fff; stroke-width: 2; }
+    .hecke-diagram .accent-indigo,
+    .hecke-diagram .accent-teal { fill: #172554; }
+    .hecke-note { margin: var(--space-1) 0 0; color: #172554; font-size: clamp(.7rem, .67rem + .08vw, .76rem); line-height: 1.45; text-align: center; }
 
     .interest-bar { padding: var(--space-5) 0; border-top: var(--border) solid var(--line); }
     .interest-bar header { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-4); }
@@ -346,7 +354,7 @@
     html[lang="en"] .sectionhead { grid-template-columns: minmax(7.5rem, .72fr) minmax(0, 2.28fr); gap: clamp(1.4rem, 3vw, 3rem); }
     html[lang="en"] .sectionhead h2 { font-size: clamp(1.9rem, 1.35rem + 2.35vw, 3.75rem); line-height: 1.1; letter-spacing: -.025em; text-wrap: balance; }
     .about { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
-    .about p { margin: 0; color: #315b73; font-size: 1.08rem; }
+    .about p { margin: 0; color: #123f59; font-size: 1.08rem; }
     .bio-column { display: grid; gap: var(--space-5); }
     .education { padding-left: var(--space-4); border-left: var(--border) solid var(--line); }
     .education h3 { margin: 0 0 var(--space-4); }
@@ -367,7 +375,7 @@
     .topic { display: flex; flex-direction: column; justify-content: space-between; min-height: clamp(12.5rem, 17vw, 15rem); padding: var(--space-5); }
     .topic:hover,
     .note-card:hover { transform: translateY(clamp(-5px, -.25vw, -3px)); border-color: var(--cyan); box-shadow: 0 1.35rem 3.25rem rgba(2, 132, 199, .16); }
-    .topic .num { color: #477b96; }
+    .topic .num { color: #285d78; }
     .topic h3 { margin: var(--space-5) 0 var(--space-2); font: 400 clamp(1.55rem, 1.35rem + .7vw, 1.9rem)/1.2 Georgia, serif; }
     html[lang="en"] .topic h3 { font-size: clamp(1.32rem, 1.16rem + .55vw, 1.68rem); line-height: 1.27; text-wrap: balance; }
     .topic p { margin: 0; color: var(--muted); }
@@ -389,7 +397,7 @@
     .note-footer { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); margin-top: var(--space-5); }
     .note-status { min-width: 0; overflow-wrap: anywhere; color: var(--muted); font-size: .8rem; }
     .note-meta { display: grid; min-width: 0; gap: var(--space-1); }
-    .note-updated { color: #477b96; font-size: .76rem; }
+    .note-updated { color: #285d78; font-size: .76rem; }
     .note-download { flex: 0 0 auto; }
     .note-download.unavailable { cursor: not-allowed; opacity: .55; }
     .public-controls { margin-top: 0; }
@@ -403,7 +411,7 @@
     .contact { display: flex; align-items: end; justify-content: space-between; gap: var(--space-6); }
     .contact h2 { max-width: 48.75rem; margin: 0; font: 400 clamp(3rem, 2rem + 4.5vw, 7rem)/.95 Georgia, serif; }
     html[lang="en"] .contact h2 { font-size: clamp(2.45rem, 1.75rem + 3.4vw, 5.4rem); line-height: 1.02; letter-spacing: -.025em; text-wrap: balance; }
-    .contact h2 span { color: var(--cyan); }
+    .contact h2 span { color: #4338ca; }
     html[lang="en"] .interest-list span,
     html[lang="en"] .filter-button,
     html[lang="en"] .public-button { font-size: clamp(.76rem, .72rem + .08vw, .84rem); line-height: 1.2; }
@@ -417,7 +425,7 @@
     .copy-button:focus-visible { border-color: var(--cyan); outline: none; background: rgba(186, 230, 253, .58); }
     .copy-button.copied { border-color: var(--cyan); background: var(--cyan); color: #fff; }
 
-    footer { display: flex; justify-content: space-between; gap: var(--space-3); padding: var(--space-5) 0; border-top: var(--border) solid var(--line); color: #52758a; font-size: .85rem; }
+    footer { display: flex; justify-content: space-between; gap: var(--space-3); padding: var(--space-5) 0; border-top: var(--border) solid var(--line); color: #285d78; font-size: .85rem; }
 
     /* Fixed table of contents. Its box grows to the exact width of its labels. */
     .page-toc {
@@ -468,7 +476,7 @@
 
     @media (max-width: 68rem) {
       .hero { grid-template-columns: 1fr; }
-      .langlands-hero { width: min(100%, 31rem); justify-self: center; }
+      .hecke-hero { width: min(100%, 31rem); justify-self: center; transform: none; }
     }
 
     @media (max-width: 48rem) {
@@ -476,7 +484,7 @@
       body.toc-open .shell { width: min(var(--max), calc(100% - clamp(1.5rem, 6vw, 2rem))); margin-right: auto; margin-left: auto; }
       .hero { grid-template-columns: 1fr; gap: var(--space-5); padding: clamp(3.5rem, 12vw, 5rem) 0; }
       .hero h1 { font-size: clamp(3.7rem, 19vw, 6rem); }
-      .langlands-hero { width: min(100%, 28rem); min-height: clamp(15rem, 70vw, 20rem); justify-self: center; }
+      .hecke-hero { width: min(100%, 28rem); min-height: clamp(15rem, 70vw, 20rem); justify-self: center; }
       .interest-bar header { align-items: start; flex-direction: column; gap: var(--space-2); }
       .sectionhead,
       .about { grid-template-columns: 1fr; }
@@ -517,14 +525,70 @@
 </head>
 <body>
   <aside class="page-toc" id="pageToc" aria-label="页面目录"><div class="toc-header"><span class="toc-title" data-zh="页面目录" data-en="Contents">页面目录</span><button class="toc-collapse" id="tocCollapse" type="button" aria-label="收起目录" data-zh="收起" data-en="Collapse">收起</button></div><button class="toc-expand" id="tocExpand" type="button" aria-label="展开目录" aria-expanded="false">☰</button><nav class="toc-links" aria-label="页内导航"><a href="#top" data-section="top" data-zh="首页" data-en="Home">首页</a><a href="#about" data-section="about" data-zh="关于" data-en="About">关于</a><a href="#research" data-section="research" data-zh="研究" data-en="Research">研究</a><a href="#notes" data-section="notes" data-zh="笔记" data-en="Notes">笔记</a><a href="#contact" data-section="contact" data-zh="联系" data-en="Contact">联系</a></nav><div class="toc-jumps"><button class="toc-jump" id="jumpTop" type="button" aria-label="返回页面顶部"><svg class="jump-glyph top" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 1V15M6 1L14 8L6 15"/></svg></button><button class="toc-jump" id="jumpBottom" type="button" aria-label="前往页面底部"><svg class="jump-glyph bottom" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 1V15M6 1L14 8L6 15"/></svg></button></div></aside>
-  <canvas class="math-background" id="langlandsBackground" aria-hidden="true"></canvas>
+  <canvas class="math-background" id="geometryBackground" aria-hidden="true"></canvas>
   <div class="sr-only" id="interactionStatus" role="status" aria-live="polite" aria-atomic="true"></div>
   <div class="shell">
     <nav class="site-nav" aria-label="主导航"><span class="mark" data-zh="赵翌嘉" data-en="Yijia Zhao">赵翌嘉</span><div class="nav-actions"><button class="lang-switch" id="langSwitch" type="button" aria-label="Switch to English"><span class="lang-segment current" data-language-indicator="zh">中文</span><span class="lang-divider" aria-hidden="true">/</span><span class="lang-segment" data-language-indicator="en">EN</span></button></div></nav>
     <main>
       <header class="hero" id="top">
         <div><div class="eyebrow" data-zh="基础数学 · 几何表示论" data-en="Pure Mathematics · Geometric Representation Theory">基础数学 · 几何表示论</div><h1 data-zh-html="&lt;i&gt;赵&lt;/i&gt;翌嘉" data-en-html="Yijia&lt;i&gt;Zhao&lt;/i&gt;"><i>赵</i>翌嘉</h1><p class="lead" data-zh="我的兴趣集中于几何表示论，以及代数几何结构如何组织并联系不同的表示论现象。我尤其关注几何 Satake 等价、Hikita 猜想与几何 Langlands 纲领，也希望从仿射 Grassmannian、反常层、幂零轨道与 Springer 消解等具体几何对象出发，理解范畴、上同调、模空间和对偶性之间的对应。" data-en="My interests center on geometric representation theory and on how structures from algebraic geometry organize and connect representation-theoretic phenomena. I am particularly interested in the geometric Satake equivalence, the Hikita conjecture, and the geometric Langlands program, and I study concrete geometric objects—including affine Grassmannians, perverse sheaves, nilpotent orbits, and the Springer resolution—to understand correspondences among categories, cohomology, moduli spaces, and dualities.">我的兴趣集中于几何表示论，以及代数几何结构如何组织并联系不同的表示论现象。我尤其关注几何 Satake 等价、Hikita 猜想与几何 Langlands 纲领，也希望从仿射 Grassmannian、反常层、幂零轨道与 Springer 消解等具体几何对象出发，理解范畴、上同调、模空间和对偶性之间的对应。</p><div class="actions"><a class="button primary" href="#research"><span data-zh="查看研究方向" data-en="Explore research">查看研究方向</span> <span aria-hidden="true">↓</span></a><a class="button" href="#notes" data-zh="浏览学习笔记" data-en="Browse notes">浏览学习笔记</a><a class="button" href="#about" data-zh="关于我" data-en="About me">关于我</a></div></div>
-        <div class="langlands-hero" aria-hidden="true"><svg class="langlands-geometry" viewBox="0 0 360 360"><path class="surface" d="M44 96C40 52 104 45 146 82C168 101 192 101 214 82C256 45 320 52 316 96C321 140 257 147 214 112C192 94 168 94 146 112C103 147 39 140 44 96Z"/><ellipse class="handle" cx="103" cy="96" rx="32" ry="21" transform="rotate(-12 103 96)"/><ellipse class="handle" cx="257" cy="96" rx="32" ry="21" transform="rotate(12 257 96)"/><path class="spectral" d="M48 260C92 214 132 302 180 260C228 218 268 302 312 260"/><path class="spectral" d="M48 276C92 322 132 234 180 276C228 318 268 234 312 276"/><ellipse class="fiber" cx="112" cy="202" rx="34" ry="16" transform="rotate(-12 112 202)"/><ellipse class="fiber" cx="180" cy="188" rx="38" ry="18"/><ellipse class="fiber" cx="248" cy="202" rx="34" ry="16" transform="rotate(12 248 202)"/><circle class="marked-point" cx="292" cy="72" r="5"/></svg><div class="langlands-object primary"><span class="math-operator">Bun</span><sub>G</sub>(X)</div><div class="langlands-correspondence"><span class="langlands-line"></span><span><span class="math-operator">Hecke</span><sub>x</sub></span><span class="langlands-line"></span></div><div class="langlands-object secondary"><span class="math-operator">LocSys</span><sub>G<sup>∨</sup></sub>(X)</div><div class="langlands-caption">Geometric Langlands</div></div>
+        <div class="hecke-hero">
+          <div class="hecke-heading"><strong data-zh="GL₂ 的基本 Hecke 修改" data-en="An elementary Hecke modification for GL₂">GL₂ 的基本 Hecke 修改</strong><span data-zh="一个具体的几何 Langlands 局部模型" data-en="A concrete local model in geometric Langlands">一个具体的几何 Langlands 局部模型</span></div>
+          <svg class="hecke-diagram" viewBox="0 0 520 440" role="img" aria-label="椭圆曲线上的秩二向量丛基本 Hecke 修改及其对应图">
+            <defs>
+              <marker id="heckeArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0 0L8 4L0 8Z" fill="#475569"/></marker>
+              <marker id="heckeArrowViolet" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0 0L8 4L0 8Z" fill="#6d28d9"/></marker>
+              <clipPath id="ellipticDomain"><polygon points="48,126 108,62 194,62 134,126"/></clipPath>
+            </defs>
+
+            <rect class="panel" x="8" y="8" width="222" height="166" rx="18"/>
+            <text class="label" x="24" y="31" data-zh="椭圆曲线（复环面模型）" data-en="Elliptic curve (complex-torus model)">椭圆曲线（复环面模型）</text>
+            <polygon class="curve-domain" points="48,126 108,62 194,62 134,126"/>
+            <g clip-path="url(#ellipticDomain)">
+              <path class="lattice-line" d="M42 112H205M42 94H205M42 76H205M72 142V48M104 142V48M136 142V48M168 142V48"/>
+            </g>
+            <path class="identify-edge" d="M52 123L103 68M139 122L190 67"/>
+            <path class="identify-edge" d="M57 126H126M116 62H186"/>
+            <circle class="marked-point" cx="153" cy="89" r="5"/>
+            <text class="formula accent-indigo" x="25" y="151">X = E<tspan baseline-shift="sub" font-size="11">τ</tspan> = ℂ/(ℤ + τℤ)</text>
+            <text class="micro" x="25" y="168">Im(τ) &gt; 0</text>
+            <text class="formula" x="163" y="84">x</text>
+
+            <rect class="panel" x="240" y="8" width="272" height="166" rx="18"/>
+            <text class="label" x="256" y="31" data-zh="点 x 处的局部格" data-en="Local lattices at x">点 x 处的局部格</text>
+            <text class="micro" x="256" y="49">𝒪<tspan baseline-shift="sub" font-size="8">x</tspan> = ℂ[[t]]</text>
+            <rect x="255" y="59" width="242" height="37" rx="10" fill="rgba(204,251,241,.6)" stroke="rgba(15,118,110,.42)"/>
+            <text class="formula accent-teal" x="270" y="83">E<tspan baseline-shift="sub" font-size="11">x</tspan> = 𝒪<tspan baseline-shift="sub" font-size="11">x</tspan>e₁ ⊕ 𝒪<tspan baseline-shift="sub" font-size="11">x</tspan>e₂</text>
+            <rect x="255" y="116" width="242" height="37" rx="10" fill="rgba(224,231,255,.7)" stroke="rgba(67,56,202,.42)"/>
+            <text class="formula accent-indigo" x="270" y="140">E′<tspan baseline-shift="sub" font-size="11">x</tspan> = 𝒪<tspan baseline-shift="sub" font-size="11">x</tspan>e₁ ⊕ t𝒪<tspan baseline-shift="sub" font-size="11">x</tspan>e₂</text>
+            <path class="map-line" d="M376 113V100"/>
+            <text class="micro" x="386" y="109" data-zh="包含" data-en="inclusion">包含</text>
+            <text class="micro" x="256" y="167" data-zh="离开 x 后，E′ 与 E 同构" data-en="Away from x, E′ and E are isomorphic">离开 x 后，E′ 与 E 同构</text>
+
+            <rect class="panel" x="8" y="185" width="504" height="78" rx="18"/>
+            <text class="label" x="24" y="208" data-zh="长度为 1 的修改" data-en="Length-one modification">长度为 1 的修改</text>
+            <text class="formula" x="78" y="241">0</text><path class="exact-line" d="M96 235H127"/>
+            <text class="formula accent-indigo" x="139" y="241">E′</text><path class="exact-line" d="M167 235H213"/>
+            <text class="formula accent-teal" x="226" y="241">E</text><path class="exact-line" d="M247 235H300"/>
+            <text class="formula" x="312" y="241">k<tspan baseline-shift="sub" font-size="11">x</tspan></text><path class="exact-line" d="M342 235H383"/>
+            <text class="formula" x="395" y="241">0</text>
+            <text class="micro" x="438" y="240" data-zh="商仅支撑在 x" data-en="quotient supported at x">商仅支撑在 x</text>
+
+            <rect class="panel" x="8" y="274" width="504" height="150" rx="18"/>
+            <text class="label" x="24" y="297" data-zh="Hecke 对应的两个投影" data-en="The two projections of the Hecke correspondence">Hecke 对应的两个投影</text>
+            <rect x="179" y="310" width="162" height="44" rx="14" fill="rgba(237,233,254,.72)" stroke="rgba(109,40,217,.46)"/>
+            <text class="formula" x="260" y="337" text-anchor="middle">Hecke<tspan baseline-shift="sub" font-size="11">x</tspan>¹(GL₂)</text>
+            <text class="formula" x="23" y="382">Bun<tspan baseline-shift="sub" font-size="11">GL₂</tspan>(X)</text>
+            <text class="formula" x="386" y="382">Bun<tspan baseline-shift="sub" font-size="11">GL₂</tspan>(X)</text>
+            <path class="map-line" d="M189 350L112 369"/>
+            <path class="map-line" d="M331 350L405 369"/>
+            <text class="formula accent-teal" x="143" y="347">p</text>
+            <text class="formula accent-indigo" x="370" y="347">q</text>
+            <text class="micro" x="24" y="407">p(E′ ⊂ E, x) = E</text>
+            <text class="micro" x="346" y="407">q(E′ ⊂ E, x) = E′</text>
+          </svg>
+          <p class="hecke-note" data-zh="p 记住修改前的丛 E，q 记住修改后的丛 E′；这个对应在 Bun(GL₂,X) 上的层或 D-模范畴中定义 Hecke 函子。" data-en="The map p remembers E, while q remembers the modified bundle E′; this correspondence defines the Hecke functor on sheaves or D-modules over Bun(GL₂,X).">p 记住修改前的丛 E，q 记住修改后的丛 E′；这个对应在 Bun(GL₂,X) 上的层或 D-模范畴中定义 Hecke 函子。</p>
+        </div>
       </header>
       <section class="interest-bar" id="interests"><header><h2 data-zh="研究方向" data-en="Research Interests">研究方向</h2><span class="kicker" data-zh="研究兴趣" data-en="RESEARCH INTERESTS">研究兴趣</span></header><div class="interest-list"><span data-zh="几何表示论" data-en="Geometric Representation Theory">几何表示论</span><span data-zh="代数几何" data-en="Algebraic Geometry">代数几何</span><span data-zh="表示论" data-en="Representation Theory">表示论</span><span data-zh="代数群" data-en="Algebraic Groups">代数群</span><span data-zh="仿射 Grassmannian" data-en="Affine Grassmannians">仿射 Grassmannian</span><span data-zh="反常层与导出范畴" data-en="Perverse Sheaves & Derived Categories">反常层与导出范畴</span><span data-zh="Springer–Slodowy 几何" data-en="Springer–Slodowy Geometry">Springer–Slodowy 几何</span><span data-zh="Kazhdan–Lusztig 理论" data-en="Kazhdan–Lusztig Theory">Kazhdan–Lusztig 理论</span><span data-zh="几何不变量理论" data-en="Geometric Invariant Theory">几何不变量理论</span><span data-zh="Hikita 猜想" data-en="Hikita Conjecture">Hikita 猜想</span><span data-zh="几何 Langlands 纲领" data-en="Geometric Langlands Program">几何 Langlands 纲领</span></div></section>
       <section id="about"><div class="sectionhead"><span class="kicker" data-zh="01 / 个人简介" data-en="01 / PROFILE">01 / 个人简介</span><h2 data-zh="在几何对象与表示论结构之间" data-en="Between geometric objects and representation-theoretic structures">在几何对象与表示论结构之间</h2></div><div class="about"><div class="bio-column"><p data-zh="我目前在四川大学攻读数学研究生，并计划继续从事基础数学研究。我的兴趣以几何表示论为中心，重视具体几何对象与表示论结构之间的对应：例如仿射 Grassmannian 上的反常层与卷积、幂零轨道与 Springer–Slodowy 几何、Schubert 几何与 Kazhdan–Lusztig 理论，以及模空间、局部系统和 Langlands 对偶所联系的范畴结构。我也关注 Hikita 猜想中辛几何、上同调与量子化之间的关系。" data-en="I am currently a graduate student in mathematics at Sichuan University and intend to continue research in pure mathematics. My interests center on geometric representation theory, with an emphasis on correspondences between concrete geometric objects and representation-theoretic structures: perverse sheaves and convolution on affine Grassmannians; nilpotent orbits and Springer–Slodowy geometry; Schubert geometry and Kazhdan–Lusztig theory; and the categorical structures connecting moduli spaces, local systems, and Langlands duality. I am also interested in the relations among symplectic geometry, cohomology, and quantization that arise around the Hikita conjecture.">我目前在四川大学攻读数学研究生，并计划继续从事基础数学研究。我的兴趣以几何表示论为中心，重视具体几何对象与表示论结构之间的对应：例如仿射 Grassmannian 上的反常层与卷积、幂零轨道与 Springer–Slodowy 几何、Schubert 几何与 Kazhdan–Lusztig 理论，以及模空间、局部系统和 Langlands 对偶所联系的范畴结构。我也关注 Hikita 猜想中辛几何、上同调与量子化之间的关系。</p><div class="education"><h3 data-zh="教育经历" data-en="EDUCATION">教育经历</h3><div class="edu-item"><span class="edu-period">2021–2025</span><strong data-zh="四川大学 · 数学强基计划" data-en="Sichuan University · Strong Foundation Program in Mathematics">四川大学 · 数学强基计划</strong><small data-zh="本科阶段" data-en="Undergraduate studies">本科阶段</small></div><div class="edu-item"><span class="edu-period" data-zh="目前" data-en="PRESENT">目前</span><strong data-zh="四川大学 · 数学研究生" data-en="Sichuan University · Graduate Student in Mathematics">四川大学 · 数学研究生</strong><small data-zh="研究生阶段" data-en="Graduate studies">研究生阶段</small></div></div></div><div class="facts"><div class="fact"><b data-zh="学科" data-en="DISCIPLINE">学科</b><span data-zh="基础数学" data-en="Pure Mathematics">基础数学</span></div><div class="fact"><b data-zh="研究重点" data-en="FOCUS">研究重点</b><span data-zh="几何表示论" data-en="Geometric Representation Theory">几何表示论</span></div><div class="fact"><b data-zh="研究工具" data-en="RESEARCH TOOLS">研究工具</b><span data-zh="代数几何 · 表示论" data-en="Algebraic Geometry · Representation Theory">代数几何 · 表示论</span></div><div class="fact"><b data-zh="我所使用语言" data-en="LANGUAGES I USE">我所使用语言</b><span data-zh="中文 / 英语" data-en="Chinese / English">中文 / 英语</span></div></div></div></section>
@@ -540,11 +604,11 @@
       </section>
       <section id="contact"><div class="contact"><h2 data-zh-html="用代数几何研究表示论，&lt;span&gt;揭示不同领域之间的联系。&lt;/span&gt;" data-en-html="Study representation theory through algebraic geometry, &lt;span&gt;revealing connections across mathematical fields.&lt;/span&gt;">用代数几何研究表示论，<span>揭示不同领域之间的联系。</span></h2><div class="contact-info"><p data-zh="欢迎围绕几何 Satake、Springer–Slodowy 几何、Hikita 猜想、几何 Langlands 及相关代数几何与表示论问题进行学术交流。" data-en="I welcome academic conversations on geometric Satake, Springer–Slodowy geometry, the Hikita conjecture, geometric Langlands, and related questions in algebraic geometry and representation theory.">欢迎围绕几何 Satake、Springer–Slodowy 几何、Hikita 猜想、几何 Langlands 及相关代数几何与表示论问题进行学术交流。</p><div class="email-row"><span class="email-address">2030258770@qq.com</span><button class="copy-button" type="button" data-email="2030258770@qq.com" data-zh="复制" data-en="Copy" aria-live="polite">复制</button></div><div class="email-row"><span class="email-address">zhao2030258770@gmail.com</span><button class="copy-button" type="button" data-email="zhao2030258770@gmail.com" data-zh="复制" data-en="Copy" aria-live="polite">复制</button></div></div></div></section>
     </main>
-    <footer><span data-zh="© 2026 赵翌嘉" data-en="© 2026 Yijia Zhao">© 2026 赵翌嘉</span><span data-zh="中国，四川省，成都市" data-en="Chengdu, Sichuan, China">中国，四川省，成都市</span></footer>
+    <footer><span id="copyrightYear" data-zh="© 2026 赵翌嘉" data-en="© 2026 Yijia Zhao">© 2026 赵翌嘉</span><span data-zh="中国，四川省，成都市" data-en="Chengdu, Sichuan, China">中国，四川省，成都市</span></footer>
   </div>
   <script>
     (() => {
-      const canvas = document.getElementById('langlandsBackground');
+      const canvas = document.getElementById('geometryBackground');
       const ctx = canvas.getContext('2d');
       const clamp = (minimum, value, maximum) => Math.min(maximum, Math.max(minimum, value));
 
@@ -617,147 +681,181 @@
           ctx.stroke();
         };
 
-        const wave = (x, y, length, amplitude, phase = 0, cycles = 1) => {
+        // A concrete smooth elliptic curve in Weierstrass form. The affine graph is
+        // y² = x³ − x; its projective closure y²z = x³ − xz² has discriminant 64.
+        const ellipticX = width * (compact ? .72 : .5);
+        const ellipticY = height * (compact ? .2 : .68);
+        const ellipticScaleX = clamp(24, width * .03, 52);
+        const ellipticScaleY = clamp(18, height * .032, 34);
+        ctx.lineWidth = lineWidth;
+        ctx.strokeStyle = 'rgba(30, 64, 175, .34)';
+        ctx.beginPath();
+        ctx.moveTo(ellipticX - ellipticScaleX * 1.25, ellipticY);
+        ctx.lineTo(ellipticX + ellipticScaleX * 2.45, ellipticY);
+        ctx.moveTo(ellipticX, ellipticY - ellipticScaleY * 2.2);
+        ctx.lineTo(ellipticX, ellipticY + ellipticScaleY * 2.2);
+        ctx.stroke();
+        const plotEllipticBranch = (start, end, sign) => {
           ctx.beginPath();
-          for (let step = 0; step <= 80; step += 1) {
-            const t = step / 80;
-            const px = x + t * length;
-            const py = y + Math.sin(t * Math.PI * 2 * cycles + phase) * amplitude * (.75 + .25 * Math.cos(t * Math.PI * 2));
-            if (step === 0) ctx.moveTo(px, py);
+          for (let index = 0; index <= 72; index += 1) {
+            const x = start + (end - start) * index / 72;
+            const value = Math.max(0, x * x * x - x);
+            const px = ellipticX + x * ellipticScaleX;
+            const py = ellipticY - sign * Math.sqrt(value) * ellipticScaleY;
+            if (index === 0) ctx.moveTo(px, py);
             else ctx.lineTo(px, py);
           }
           ctx.stroke();
         };
+        ctx.lineWidth = lineWidth * 1.75;
+        ctx.strokeStyle = 'rgba(67, 56, 202, .72)';
+        [-1, 1].forEach((sign) => {
+          plotEllipticBranch(-1, 0, sign);
+          plotEllipticBranch(1, 2.15, sign);
+        });
+        label('E : y²z = x³ − xz²', ellipticX + ellipticScaleX * .55, ellipticY + ellipticScaleY * 2.65, 'center');
+        label('Δ = 64 ≠ 0', ellipticX + ellipticScaleX * .55, ellipticY + ellipticScaleY * 3.25, 'center');
 
-        // Curved trajectories give the geometric background additional depth.
-        ctx.lineWidth = lineWidth;
-        ctx.strokeStyle = 'rgba(2, 132, 199, .18)';
-        for (let index = 0; index < 7; index += 1) {
-          const y = height * (.08 + index * .145);
-          ctx.beginPath();
-          ctx.moveTo(-width * .08, y);
-          ctx.bezierCurveTo(width * .22, y - height * .13, width * .48, y + height * .13, width * .72, y);
-          ctx.bezierCurveTo(width * .86, y - height * .07, width * .94, y + height * .05, width * 1.08, y - height * .03);
-          ctx.stroke();
-        }
-
-        // Smooth projective curve X, drawn schematically with two handles and a marked point x.
-        const curveX = compact ? width * .72 : width * .79;
-        const curveY = height * .23;
-        const curveRadius = Math.min(width, height) * (compact ? .12 : .145);
-        ctx.lineWidth = lineWidth * 1.5;
-        ctx.strokeStyle = 'rgba(3, 105, 161, .68)';
-        ctx.fillStyle = 'rgba(186, 230, 253, .22)';
-        ctx.beginPath();
-        ctx.moveTo(curveX - curveRadius * 1.45, curveY);
-        ctx.bezierCurveTo(curveX - curveRadius * 1.5, curveY - curveRadius, curveX - curveRadius * .25, curveY - curveRadius, curveX, curveY);
-        ctx.bezierCurveTo(curveX + curveRadius * .25, curveY - curveRadius, curveX + curveRadius * 1.5, curveY - curveRadius, curveX + curveRadius * 1.45, curveY);
-        ctx.bezierCurveTo(curveX + curveRadius * 1.5, curveY + curveRadius, curveX + curveRadius * .25, curveY + curveRadius, curveX, curveY);
-        ctx.bezierCurveTo(curveX - curveRadius * .25, curveY + curveRadius, curveX - curveRadius * 1.5, curveY + curveRadius, curveX - curveRadius * 1.45, curveY);
-        ctx.fill();
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.ellipse(curveX - curveRadius * .7, curveY, curveRadius * .38, curveRadius * .52, -.18, 0, Math.PI * 2);
-        ctx.ellipse(curveX + curveRadius * .7, curveY, curveRadius * .38, curveRadius * .52, .18, 0, Math.PI * 2);
-        ctx.stroke();
-        const markedX = curveX + curveRadius * 1.08;
-        const markedY = curveY - curveRadius * .48;
-        ctx.fillStyle = 'rgba(2, 132, 199, .86)';
-        ctx.beginPath();
-        ctx.arc(markedX, markedY, clamp(2.4, width / 450, 4), 0, Math.PI * 2);
-        ctx.fill();
-        label('smooth projective curve X', curveX, curveY + curveRadius * 1.34, 'center');
-        label('x', markedX + labelSize * .55, markedY - labelSize * .25);
-
-        // A ramified spectral cover Σₐ → X, with the covering curve drawn above its base curve.
+        // The local real slice of a double spectral cover Σ(q): η² = q. The two
+        // sheets meet exactly above the two displayed zeros of q.
         const spectralX = width * (compact ? .08 : .07);
-        const spectralY = height * .73;
-        const spectralLength = width * (compact ? .48 : .34);
-        const spectralAmplitude = clamp(12, Math.min(width, height) * .032, 28);
-        ctx.lineWidth = lineWidth * 1.25;
-        ctx.strokeStyle = 'rgba(3, 105, 161, .52)';
-        wave(spectralX, spectralY + spectralAmplitude * 1.9, spectralLength, spectralAmplitude * .42);
-        ctx.strokeStyle = 'rgba(2, 132, 199, .72)';
-        wave(spectralX, spectralY, spectralLength, spectralAmplitude, 0, 1.5);
-        wave(spectralX, spectralY, spectralLength, spectralAmplitude, Math.PI, 1.5);
-        ctx.fillStyle = 'rgba(2, 132, 199, .8)';
-        [0, 1 / 3, 2 / 3, 1].forEach((t) => {
-          const px = spectralX + spectralLength * t;
+        const spectralY = height * .72;
+        const spectralLength = width * (compact ? .48 : .29);
+        const spectralAmplitude = clamp(18, Math.min(width, height) * .04, 34);
+        const branchLeft = spectralX + spectralLength * .12;
+        const branchRight = spectralX + spectralLength * .88;
+        ctx.lineWidth = lineWidth * 1.5;
+        ctx.strokeStyle = 'rgba(67, 56, 202, .7)';
+        ctx.beginPath();
+        ctx.moveTo(branchLeft, spectralY);
+        ctx.quadraticCurveTo((branchLeft + branchRight) / 2, spectralY - spectralAmplitude * 1.55, branchRight, spectralY);
+        ctx.quadraticCurveTo((branchLeft + branchRight) / 2, spectralY + spectralAmplitude * 1.55, branchLeft, spectralY);
+        ctx.stroke();
+        ctx.fillStyle = 'rgba(109, 40, 217, .82)';
+        [branchLeft, branchRight].forEach((px) => {
           ctx.beginPath();
-          ctx.arc(px, spectralY, clamp(2, width / 520, 3.5), 0, Math.PI * 2);
+          ctx.arc(px, spectralY, clamp(2.5, width / 500, 4), 0, Math.PI * 2);
           ctx.fill();
         });
-        ctx.strokeStyle = 'rgba(3, 105, 161, .55)';
-        arrow(spectralX + spectralLength * .5, spectralY + spectralAmplitude * .3, spectralX + spectralLength * .5, spectralY + spectralAmplitude * 1.45);
-        label('Σₐ', spectralX + spectralLength * .5, spectralY - spectralAmplitude * 1.5, 'center');
-        label('π : Σₐ → X', spectralX + spectralLength * .5, spectralY + spectralAmplitude * 3.1, 'center');
+        const baseY = spectralY + spectralAmplitude * 2.35;
+        ctx.lineWidth = lineWidth * 1.2;
+        ctx.strokeStyle = 'rgba(15, 118, 110, .62)';
+        ctx.beginPath();
+        ctx.moveTo(spectralX, baseY);
+        ctx.bezierCurveTo(spectralX + spectralLength * .3, baseY - spectralAmplitude * .18, spectralX + spectralLength * .7, baseY + spectralAmplitude * .18, spectralX + spectralLength, baseY);
+        ctx.stroke();
+        [0.32, 0.5, 0.68].forEach((t) => {
+          const px = branchLeft + (branchRight - branchLeft) * t;
+          const sheetOffset = spectralAmplitude * 1.55 * 4 * t * (1 - t) * .5;
+          ctx.beginPath();
+          ctx.moveTo(px, spectralY - sheetOffset);
+          ctx.lineTo(px, spectralY + sheetOffset);
+          ctx.stroke();
+        });
+        ctx.strokeStyle = 'rgba(71, 85, 105, .66)';
+        arrow((branchLeft + branchRight) / 2, spectralY + spectralAmplitude * 1.1, (branchLeft + branchRight) / 2, baseY - spectralAmplitude * .25);
+        label('Σ(q) : η² = q ⊂ Tot(K)', spectralX + spectralLength * .5, spectralY - spectralAmplitude * 1.8, 'center');
+        label('π : Σ(q) → X   ·   branch locus q = 0', spectralX + spectralLength * .5, baseY + labelSize * 1.45, 'center');
 
-        if (!compact) {
-          // Nested Schubert strata in the affine Grassmannian.
-          const grassmannianX = width * .55;
-          const grassmannianY = height * .2;
-          ctx.strokeStyle = 'rgba(3, 105, 161, .58)';
-          ctx.lineWidth = lineWidth * 1.15;
-          [1, .72, .44].forEach((scale, index) => {
+        {
+          // A concrete GL₂ affine-Grassmannian point represented by a lattice chain.
+          const grassmannianX = width * (compact ? .38 : .49);
+          const grassmannianY = height * (compact ? .055 : .08);
+          const latticeWidth = width * (compact ? .22 : .14);
+          const latticeHeight = height * (compact ? .075 : .13);
+          ctx.lineWidth = lineWidth * 1.25;
+          [
+            { inset: 0, color: 'rgba(15, 118, 110, .62)' },
+            { inset: .18, color: 'rgba(67, 56, 202, .68)' },
+            { inset: .36, color: 'rgba(109, 40, 217, .58)' }
+          ].forEach(({ inset, color }) => {
+            ctx.strokeStyle = color;
+            ctx.strokeRect(
+              grassmannianX - latticeWidth * (.5 - inset / 2),
+              grassmannianY + latticeHeight * inset / 2,
+              latticeWidth * (1 - inset),
+              latticeHeight * (1 - inset)
+            );
+          });
+          label('Λ₀ = 𝒪²', grassmannianX - latticeWidth * .55, grassmannianY - labelSize * .45);
+          label('Λ = 𝒪e₁ ⊕ t𝒪e₂', grassmannianX, grassmannianY + latticeHeight + labelSize * 1.15, 'center');
+          label('tΛ₀ ⊂ Λ ⊂ Λ₀', grassmannianX, grassmannianY + latticeHeight + labelSize * 2.35, 'center');
+          mathLabel({ operator: 'Gr', subscript: 'GL₂', suffix: ' = GL₂(𝒦)/GL₂(𝒪)' }, grassmannianX, grassmannianY + latticeHeight + labelSize * 3.8);
+
+          // Monodromy data for a dual-group local system on a genus-two curve.
+          const monodromyX = width * (compact ? .76 : .22);
+          const monodromyY = height * (compact ? .5 : .43);
+          const loopRadiusX = width * (compact ? .045 : .027);
+          const loopRadiusY = height * (compact ? .026 : .038);
+          ctx.lineWidth = lineWidth * 1.35;
+          ['rgba(15, 118, 110, .62)', 'rgba(67, 56, 202, .66)', 'rgba(15, 118, 110, .62)', 'rgba(67, 56, 202, .66)'].forEach((color, index) => {
+            const angle = -Math.PI * .76 + index * Math.PI * .51;
+            const cx = monodromyX + Math.cos(angle) * loopRadiusX * .92;
+            const cy = monodromyY + Math.sin(angle) * loopRadiusY * .76;
+            ctx.strokeStyle = color;
             ctx.beginPath();
-            ctx.ellipse(grassmannianX, grassmannianY, width * .074 * scale, height * .07 * scale, -.18 + index * .18, 0, Math.PI * 2);
+            ctx.ellipse(cx, cy, loopRadiusX, loopRadiusY, angle + Math.PI / 2, 0, Math.PI * 2);
             ctx.stroke();
           });
-          mathLabel({ operator: 'Gr', subscript: 'G' }, grassmannianX, grassmannianY + height * .105);
-          label('Schubert strata', grassmannianX, grassmannianY + height * .135, 'center');
+          ctx.fillStyle = 'rgba(109, 40, 217, .84)';
+          ctx.beginPath();
+          ctx.arc(monodromyX, monodromyY, clamp(2.5, width / 520, 4), 0, Math.PI * 2);
+          ctx.fill();
+          mathLabel({ operator: 'ρ : π₁(X,x) → ', subscript: 'G', dual: true }, monodromyX, monodromyY + height * (compact ? .075 : .105));
+          label('[A₁,B₁][A₂,B₂] = 1', monodromyX, monodromyY + height * (compact ? .105 : .138), 'center');
 
-          // Hecke correspondence: the arrows and moduli objects are shown together.
-          const heckeY = height * .48;
-          const leftNode = width * .11;
-          const centerNode = width * .27;
-          const rightNode = width * .43;
-          ctx.lineWidth = lineWidth * 1.2;
-          ctx.strokeStyle = 'rgba(3, 105, 161, .58)';
-          [leftNode, centerNode, rightNode].forEach((x, index) => {
-            ctx.beginPath();
-            ctx.ellipse(x, heckeY, width * (index === 1 ? .052 : .044), height * (index === 1 ? .047 : .04), 0, 0, Math.PI * 2);
-            ctx.stroke();
-          });
-          arrow(centerNode - width * .055, heckeY, leftNode + width * .048, heckeY);
-          arrow(centerNode + width * .055, heckeY, rightNode - width * .048, heckeY);
-          mathLabel({ operator: 'Bun', subscript: 'G', suffix: '(X)' }, leftNode, heckeY + height * .075);
-          mathLabel({ operator: 'Hecke', subscript: 'x' }, centerNode, heckeY + height * .075);
-          mathLabel({ operator: 'Bun', subscript: 'G', suffix: '(X)' }, rightNode, heckeY + height * .075);
-
-          // Hitchin fibration: schematic abelian fibers over points of the Hitchin base 𝒜_G.
-          const hitchinX = width * .65;
-          const hitchinY = height * .82;
-          const hitchinLength = width * .27;
-          ctx.strokeStyle = 'rgba(3, 105, 161, .56)';
+          // The GL₂ Hitchin map and generic spectral fibers.
+          const hitchinX = width * (compact ? .58 : .65);
+          const hitchinY = height * (compact ? .88 : .84);
+          const hitchinLength = width * (compact ? .35 : .27);
+          ctx.lineWidth = lineWidth * 1.25;
+          ctx.strokeStyle = 'rgba(15, 118, 110, .62)';
           ctx.beginPath();
           ctx.moveTo(hitchinX, hitchinY);
-          ctx.bezierCurveTo(hitchinX + hitchinLength * .35, hitchinY - height * .025, hitchinX + hitchinLength * .65, hitchinY + height * .025, hitchinX + hitchinLength, hitchinY);
+          ctx.lineTo(hitchinX + hitchinLength, hitchinY);
           ctx.stroke();
-          for (let index = 0; index < 4; index += 1) {
-            const px = hitchinX + hitchinLength * (.12 + index * .25);
-            const py = hitchinY + Math.sin((.12 + index * .25) * Math.PI * 2) * height * .02;
+          [0.18, 0.5, 0.82].forEach((position, index) => {
+            const px = hitchinX + hitchinLength * position;
+            const fiberY = hitchinY - height * (compact ? .075 : .105);
+            const fiberWidth = width * (compact ? .06 : .038);
+            const fiberHeight = height * (compact ? .03 : .045);
+            ctx.fillStyle = index === 1 ? 'rgba(224, 231, 255, .34)' : 'rgba(204, 251, 241, .28)';
+            ctx.strokeStyle = index === 1 ? 'rgba(67, 56, 202, .68)' : 'rgba(15, 118, 110, .58)';
             ctx.beginPath();
-            ctx.ellipse(px, py - height * .105, width * .025, height * .032, index % 2 ? .2 : -.2, 0, Math.PI * 2);
-            ctx.ellipse(px, py - height * .105, width * .012, height * .032, Math.PI / 2, 0, Math.PI * 2);
+            ctx.moveTo(px - fiberWidth * .55, fiberY + fiberHeight * .5);
+            ctx.lineTo(px - fiberWidth * .3, fiberY - fiberHeight * .5);
+            ctx.lineTo(px + fiberWidth * .55, fiberY - fiberHeight * .5);
+            ctx.lineTo(px + fiberWidth * .3, fiberY + fiberHeight * .5);
+            ctx.closePath();
+            ctx.fill();
             ctx.stroke();
-            arrow(px, py - height * .07, px, py - height * .012);
-          }
-          label('Hitchin fibration  h', hitchinX + hitchinLength * .5, hitchinY + height * .062, 'center');
-          mathLabel({ operator: '𝒜', subscript: 'G' }, hitchinX + hitchinLength * .92, hitchinY + height * .01);
+            ctx.beginPath();
+            ctx.moveTo(px, fiberY - fiberHeight * .5);
+            ctx.lineTo(px - fiberWidth * .25, fiberY + fiberHeight * .5);
+            ctx.moveTo(px - fiberWidth * .42, fiberY);
+            ctx.lineTo(px + fiberWidth * .42, fiberY);
+            ctx.stroke();
+            ctx.strokeStyle = 'rgba(71, 85, 105, .62)';
+            arrow(px, fiberY + fiberHeight * .72, px, hitchinY - height * .012);
+            ctx.fillStyle = 'rgba(67, 56, 202, .78)';
+            ctx.beginPath();
+            ctx.arc(px, hitchinY, clamp(2.2, width / 560, 3.6), 0, Math.PI * 2);
+            ctx.fill();
+          });
+          label('generic fiber  Pic(Σₐ)', hitchinX + hitchinLength * .5, hitchinY - height * (compact ? .125 : .18), 'center');
+          label('h : Higgs(GL₂, X) → 𝒜(GL₂)', hitchinX + hitchinLength * .5, hitchinY + labelSize * 1.55, 'center');
+          label('𝒜(GL₂) = H⁰(X,K) ⊕ H⁰(X,K²)', hitchinX + hitchinLength * .5, hitchinY + labelSize * 3, 'center');
+          label('h(E, φ) = (tr φ, det φ)', hitchinX + hitchinLength * .5, hitchinY + labelSize * 4.45, 'center');
+        }
 
-          // Based loops schematically encode monodromy data of a dual-group local system on X.
-          const localSystemX = width * .79;
-          const localSystemY = height * .49;
-          ctx.strokeStyle = 'rgba(3, 105, 161, .6)';
-          ctx.beginPath();
-          ctx.ellipse(localSystemX - width * .025, localSystemY, width * .034, height * .032, -.24, 0, Math.PI * 2);
-          ctx.ellipse(localSystemX + width * .025, localSystemY, width * .034, height * .032, .24, 0, Math.PI * 2);
-          ctx.stroke();
-          ctx.fillStyle = 'rgba(2, 132, 199, .82)';
-          ctx.beginPath();
-          ctx.arc(localSystemX, localSystemY, clamp(2.2, width / 500, 3.8), 0, Math.PI * 2);
-          ctx.fill();
-          mathLabel({ operator: 'LocSys', subscript: 'G', dual: true, suffix: '(X)' }, localSystemX, height * .56);
+        // Keep the opening hero illustration visually separate from the fixed background.
+        const heroIllustration = document.querySelector('.hecke-hero');
+        if (heroIllustration) {
+          const rect = heroIllustration.getBoundingClientRect();
+          if (rect.bottom > 0 && rect.top < height) {
+            const padding = clamp(16, width * .015, 28);
+            ctx.clearRect(rect.left - padding, rect.top - padding, rect.width + padding * 2, rect.height + padding * 2);
+          }
         }
       };
       drawLanglandsBackground();
@@ -774,6 +872,18 @@
         timeZone: 'Asia/Shanghai',
         timeZoneLabel: Object.freeze({ zh: '北京时间 UTC+8', en: 'Beijing Time, UTC+8' })
       });
+      const currentYear = new Intl.DateTimeFormat('en-US', {
+        timeZone: SITE_CONFIG.timeZone,
+        year: 'numeric'
+      }).format(new Date());
+      const firstPublishedYear = 2026;
+      const observedYear = Number(currentYear);
+      const copyrightYears = Number.isFinite(observedYear) && observedYear > firstPublishedYear
+        ? `${firstPublishedYear}–${observedYear}`
+        : String(firstPublishedYear);
+      const copyrightYear = document.getElementById('copyrightYear');
+      copyrightYear.dataset.zh = `© ${copyrightYears} 赵翌嘉`;
+      copyrightYear.dataset.en = `© ${copyrightYears} Yijia Zhao`;
       const languageButton = document.getElementById('langSwitch');
       const languageIndicators = Array.from(languageButton.querySelectorAll('[data-language-indicator]'));
       const notesSection = document.getElementById('notes');
