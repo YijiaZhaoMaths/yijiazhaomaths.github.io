@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="赵翌嘉的个人学术主页，关注几何表示论、几何 Satake 等价、Hikita 猜想与几何 Langlands 纲领。">
-  <meta name="site-version" content="2026-09-23-copyright-range-v12">
+  <meta name="site-version" content="2026-09-23-note-name-sort-v13">
   <title>Yijia Zhao · Mathematics</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%237dd3fc'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%230369a1' stroke-width='3'/%3E%3Cpath d='M18 40 32 17 46 40Z' fill='none' stroke='%23ffffff' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
   <style>
@@ -401,6 +401,7 @@
     .note-download { flex: 0 0 auto; }
     .note-download.unavailable { cursor: not-allowed; opacity: .55; }
     .public-controls { margin-top: 0; }
+    .sort-controls { display: flex; flex: 0 1 auto; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-2); }
     .public-search { flex: 1 1 clamp(16rem, 38vw, 32.5rem); max-width: 32.5rem; min-height: var(--control-size); padding: var(--space-2) var(--space-3); border: var(--border) solid var(--line); border-radius: 999rem; background: rgba(255, 255, 255, .86); color: var(--text); font-size: .92rem; }
     .public-search:focus { border-color: var(--cyan); outline: clamp(2px, .15vw, 3px) solid rgba(2, 132, 199, .12); }
     .research-public-controls { display: flex; justify-content: flex-end; gap: var(--space-2); margin: calc(0px - var(--space-4)) 0 var(--space-4); }
@@ -493,6 +494,8 @@
       .topics,
       .notes-grid,
       .facts { grid-template-columns: 1fr; }
+      .public-search { width: 100%; max-width: none; }
+      .sort-controls { width: 100%; justify-content: flex-start; }
       .topic { min-height: clamp(11rem, 45vw, 13rem); }
       .contact { align-items: start; flex-direction: column; }
       footer { flex-direction: column; }
@@ -597,7 +600,7 @@
         <div class="sectionhead"><span class="kicker" data-zh="03 / 学习笔记" data-en="03 / NOTES">03 / 学习笔记</span><h2 data-zh="笔记" data-en="Notes">笔记</h2></div>
         <p class="notes-intro" data-zh="这里公开展示几何表示论、代数几何与表示论相关的学习笔记。访客可以按主题筛选、搜索并下载已经发布的 PDF。" data-en="This section publicly presents study notes in geometric representation theory, algebraic geometry, and representation theory. Visitors can filter, search, and download published PDFs.">这里公开展示几何表示论、代数几何与表示论相关的学习笔记。访客可以按主题筛选、搜索并下载已经发布的 PDF。</p>
         <div class="notes-toolbar"><div class="note-filters" role="group" aria-label="笔记分类"><button class="filter-button active" type="button" data-filter="all" data-zh="全部" data-en="All">全部</button><button class="filter-button" type="button" data-filter="geometric-representation" data-zh="几何表示论" data-en="Geometric Representation">几何表示论</button><button class="filter-button" type="button" data-filter="algebraic-geometry" data-zh="代数几何" data-en="Algebraic Geometry">代数几何</button><button class="filter-button" type="button" data-filter="representation-theory" data-zh="表示论" data-en="Representation Theory">表示论</button></div></div>
-        <div class="public-controls"><input class="public-search" id="noteSearch" type="search" data-placeholder-zh="搜索笔记标题或内容" data-placeholder-en="Search note titles or descriptions" placeholder="搜索笔记标题或内容"><div role="group" aria-label="笔记日期排序"><button class="public-button active" id="sortNewest" type="button" data-sort="newest" data-zh="从新到旧" data-en="Newest first">从新到旧</button> <button class="public-button" id="sortOldest" type="button" data-sort="oldest" data-zh="从旧到新" data-en="Oldest first">从旧到新</button></div></div>
+        <div class="public-controls"><input class="public-search" id="noteSearch" type="search" data-placeholder-zh="搜索笔记标题或内容" data-placeholder-en="Search note titles or descriptions" placeholder="搜索笔记标题或内容"><div class="sort-controls" role="group" aria-label="笔记排序"><button class="public-button active" id="sortNewest" type="button" data-sort="newest" data-zh="从新到旧" data-en="Newest first" aria-pressed="true">从新到旧</button><button class="public-button" id="sortOldest" type="button" data-sort="oldest" data-zh="从旧到新" data-en="Oldest first" aria-pressed="false">从旧到新</button><button class="public-button" id="sortNameAscending" type="button" data-sort="name-ascending" data-zh="名称升序" data-en="Name A–Z" aria-pressed="false">名称升序</button><button class="public-button" id="sortNameDescending" type="button" data-sort="name-descending" data-zh="名称降序" data-en="Name Z–A" aria-pressed="false">名称降序</button></div></div>
         <!-- Update notes/metadata.json when publishing a note. data-updated and the file's Last-Modified header remain compatible fallbacks. -->
         <div class="notes-grid"><article class="note-card" data-category="geometric-representation" data-updated=""><div><span class="note-category" data-zh="几何表示论" data-en="GEOMETRIC REPRESENTATION THEORY">几何表示论</span><h3 data-zh="几何 Satake 学习笔记" data-en="Notes on Geometric Satake">几何 Satake 学习笔记</h3><p data-zh="仿射 Grassmannian、卷积、反常层与 Tannakian 重构。" data-en="Affine Grassmannians, convolution, perverse sheaves, and Tannakian reconstruction.">仿射 Grassmannian、卷积、反常层与 Tannakian 重构。</p></div><div class="note-footer"><div class="note-meta"><span class="note-status"><code>geometric-satake-notes.pdf</code></span><time class="note-updated" datetime="">更新日期：尚未记录</time></div><a class="note-download unavailable" href="notes/geometric-satake-notes.pdf" download data-note-file="notes/geometric-satake-notes.pdf" data-zh="检查中" data-en="Checking">检查中</a></div></article><article class="note-card" data-category="algebraic-geometry geometric-representation" data-updated=""><div><span class="note-category" data-zh="代数几何 · 层论" data-en="ALGEBRAIC GEOMETRY · SHEAF THEORY">代数几何 · 层论</span><h3 data-zh="反常层学习笔记" data-en="Notes on Perverse Sheaves">反常层学习笔记</h3><p data-zh="反常 t-结构、交叉上同调与 Verdier 对偶。" data-en="Perverse t-structures, intersection cohomology, and Verdier duality.">反常 t-结构、交叉上同调与 Verdier 对偶。</p></div><div class="note-footer"><div class="note-meta"><span class="note-status"><code>perverse-sheaves-notes.pdf</code></span><time class="note-updated" datetime="">更新日期：尚未记录</time></div><a class="note-download unavailable" href="notes/perverse-sheaves-notes.pdf" download data-note-file="notes/perverse-sheaves-notes.pdf" data-zh="检查中" data-en="Checking">检查中</a></div></article><article class="note-card" data-category="geometric-representation representation-theory" data-updated=""><div><span class="note-category" data-zh="几何表示论 · 表示论" data-en="GEOMETRIC REPRESENTATION · REPRESENTATION THEORY">几何表示论 · 表示论</span><h3 data-zh="Springer 理论学习笔记" data-en="Notes on Springer Theory">Springer 理论学习笔记</h3><p data-zh="幂零轨道、Springer 消解、Springer 纤维与 Weyl 群表示。" data-en="Nilpotent orbits, the Springer resolution, Springer fibers, and Weyl group representations.">幂零轨道、Springer 消解、Springer 纤维与 Weyl 群表示。</p></div><div class="note-footer"><div class="note-meta"><span class="note-status"><code>springer-theory-notes.pdf</code></span><time class="note-updated" datetime="">更新日期：尚未记录</time></div><a class="note-download unavailable" href="notes/springer-theory-notes.pdf" download data-note-file="notes/springer-theory-notes.pdf" data-zh="检查中" data-en="Checking">检查中</a></div></article></div>
         <div class="notes-empty" id="notesEmpty" hidden data-zh="没有符合条件的笔记。" data-en="No notes match the current filters.">没有符合条件的笔记。</div>
@@ -900,6 +903,7 @@
       const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
       let language = localStorage.getItem('site-language');
       if (!['zh', 'en'].includes(language)) language = SITE_CONFIG.defaultLanguage;
+      let currentNoteSort = 'newest';
       let announcementTimer;
 
       noteCards.forEach((card, index) => { card.dataset.originalIndex = String(index); });
@@ -981,12 +985,13 @@
         pageToc.setAttribute('aria-label', lang === 'zh' ? '页面目录' : 'Page contents');
         tocLinks.setAttribute('aria-label', lang === 'zh' ? '页内导航' : 'On-page navigation');
         document.querySelector('.note-filters').setAttribute('aria-label', lang === 'zh' ? '笔记分类' : 'Note categories');
-        document.querySelector('[data-sort]').parentElement.setAttribute('aria-label', lang === 'zh' ? '笔记日期排序' : 'Sort notes by date');
+        document.querySelector('[data-sort]').parentElement.setAttribute('aria-label', lang === 'zh' ? '笔记排序' : 'Sort notes');
         document.getElementById('jumpTop').setAttribute('aria-label', lang === 'zh' ? '返回页面顶部' : 'Go to the top of the page');
         document.getElementById('jumpBottom').setAttribute('aria-label', lang === 'zh' ? '前往页面底部' : 'Go to the bottom of the page');
         tocCollapse.setAttribute('aria-label', lang === 'zh' ? '收起目录' : 'Collapse contents');
         tocExpand.setAttribute('aria-label', lang === 'zh' ? '展开目录' : 'Expand contents');
         renderNoteDates();
+        if (currentNoteSort.startsWith('name-')) sortNoteCards(currentNoteSort, false);
         localStorage.setItem('site-language', lang);
         window.requestAnimationFrame(syncTocReserve);
       };
@@ -1004,7 +1009,18 @@
       };
 
       const sortNoteCards = (direction, shouldAnnounce = true) => {
+        currentNoteSort = direction;
         const sorted = [...noteCards].sort((a, b) => {
+          if (direction === 'name-ascending' || direction === 'name-descending') {
+            const aTitle = a.querySelector('h3').dataset[language];
+            const bTitle = b.querySelector('h3').dataset[language];
+            const comparison = aTitle.localeCompare(bTitle, language === 'zh' ? 'zh-CN' : 'en', {
+              numeric: true,
+              sensitivity: 'base'
+            });
+            if (comparison !== 0) return direction === 'name-ascending' ? comparison : -comparison;
+            return Number(a.dataset.originalIndex) - Number(b.dataset.originalIndex);
+          }
           const aDate = parseNoteDate(a.dataset.updated);
           const bDate = parseNoteDate(b.dataset.updated);
           if (!aDate && !bDate) return Number(a.dataset.originalIndex) - Number(b.dataset.originalIndex);
@@ -1013,11 +1029,16 @@
           return direction === 'newest' ? bDate - aDate : aDate - bDate;
         });
         sorted.forEach((card) => noteGrid.appendChild(card));
-        document.querySelectorAll('[data-sort]').forEach((button) => button.classList.toggle('active', button.dataset.sort === direction));
+        document.querySelectorAll('[data-sort]').forEach((button) => {
+          const active = button.dataset.sort === direction;
+          button.classList.toggle('active', active);
+          button.setAttribute('aria-pressed', String(active));
+        });
         if (shouldAnnounce) {
-          announce(language === 'zh'
-            ? (direction === 'newest' ? '笔记已按从新到旧排序' : '笔记已按从旧到新排序')
-            : (direction === 'newest' ? 'Notes sorted newest first' : 'Notes sorted oldest first'));
+          const messages = language === 'zh'
+            ? { newest: '笔记已按从新到旧排序', oldest: '笔记已按从旧到新排序', 'name-ascending': '笔记已按名称升序排列', 'name-descending': '笔记已按名称降序排列' }
+            : { newest: 'Notes sorted newest first', oldest: 'Notes sorted oldest first', 'name-ascending': 'Notes sorted by name A to Z', 'name-descending': 'Notes sorted by name Z to A' };
+          announce(messages[direction]);
         }
       };
 
@@ -1191,7 +1212,7 @@
         const checks = Array.from(document.querySelectorAll('.note-download')).map((download) => checkNoteFile(download).catch(() => null));
         await Promise.all(checks);
         renderNoteDates();
-        sortNoteCards('newest', false);
+        sortNoteCards(currentNoteSort, false);
       };
 
       initializeNoteDates();
