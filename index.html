@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="赵翌嘉的个人学术主页，关注几何表示论、几何 Satake 等价、Hikita 猜想与几何 Langlands 纲领。">
-  <meta name="site-version" content="2026-09-23-responsive-v8">
+  <meta name="site-version" content="2026-09-23-interaction-v10">
   <title>Yijia Zhao · Mathematics</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%237dd3fc'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%230369a1' stroke-width='3'/%3E%3Cpath d='M18 40 32 17 46 40Z' fill='none' stroke='%23ffffff' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
   <style>
@@ -35,6 +35,9 @@
       --control-size: clamp(2.45rem, 2.2rem + .55vw, 3rem);
       --icon-size: clamp(1.15rem, 1rem + .35vw, 1.5rem);
       --nav-height: clamp(4rem, 3.5rem + 1vw, 4.75rem);
+      --page-gutter: clamp(1rem, 2.5vw, 2.5rem);
+      --toc-reserve: clamp(12.25rem, 16vw, 14rem);
+      --focus-ring: 0 0 0 clamp(.18rem, .14rem + .08vw, .26rem) rgba(2, 132, 199, .2);
       --shadow-sm: 0 clamp(.45rem, .35rem + .3vw, .8rem) clamp(1.25rem, 1rem + .8vw, 2rem) rgba(2, 132, 199, .12);
       --shadow-lg: 0 clamp(1rem, .8rem + .5vw, 1.55rem) clamp(2.3rem, 1.8rem + 1vw, 3.4rem) rgba(2, 132, 199, .13);
     }
@@ -47,6 +50,8 @@
     }
 
     body {
+      position: relative;
+      isolation: isolate;
       margin: 0;
       overflow-x: hidden;
       color: var(--text);
@@ -76,23 +81,39 @@
 
     a { color: inherit; text-decoration: none; }
 
-    sub { font-size: .58em; }
+    sub { font-size: .68em; line-height: 0; vertical-align: -.3em; }
+    sub sup { position: relative; top: -.35em; font-size: .72em; line-height: 0; }
 
     .math-background {
       position: fixed;
       inset: 0;
-      z-index: -2;
+      z-index: 0;
       width: 100%;
       height: 100%;
-      opacity: .94;
+      opacity: 1;
       pointer-events: none;
     }
 
     .shell {
       position: relative;
-      width: min(var(--max), calc(100% - clamp(2rem, 5vw, 5rem)));
+      z-index: 1;
+      width: min(var(--max), calc(100% - var(--page-gutter) - var(--page-gutter)));
       margin: auto;
+      transition: width .42s cubic-bezier(.22, 1, .36, 1), margin .42s cubic-bezier(.22, 1, .36, 1);
     }
+
+    body.toc-open .shell {
+      width: min(var(--max), calc(100% - var(--toc-reserve) - var(--page-gutter)));
+      margin-right: var(--page-gutter);
+      margin-left: max(var(--toc-reserve), calc((100vw - var(--max)) / 2));
+    }
+
+    main p,
+    main h1,
+    main h2,
+    main h3,
+    .eyebrow,
+    .kicker { text-shadow: 0 1px 2px rgba(255, 255, 255, .94); }
 
     .site-nav {
       position: sticky;
@@ -125,14 +146,27 @@
       background: rgba(255, 255, 255, .86);
       color: var(--text);
       cursor: pointer;
-      transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease;
+      transition: color .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+    }
+
+    button:active:not(.toc-jump),
+    .button:active,
+    .toc-links a:active { transform: scale(.96); }
+    .toc-jump:active { transform: translateX(-50%) scale(.96); }
+
+    .interaction-pulse { animation: interactionPulse .46s cubic-bezier(.22, 1, .36, 1); }
+
+    @keyframes interactionPulse {
+      0% { box-shadow: 0 0 0 0 rgba(2, 132, 199, .35); }
+      55% { box-shadow: 0 0 0 clamp(.45rem, .35rem + .3vw, .75rem) rgba(2, 132, 199, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(2, 132, 199, 0); }
     }
 
     .lang-switch {
       display: inline-flex;
       align-items: center;
-      gap: var(--space-1);
-      padding: var(--space-2) var(--space-3);
+      gap: clamp(.14rem, .1rem + .1vw, .24rem);
+      padding: clamp(.18rem, .14rem + .1vw, .28rem);
       border-color: var(--cyan);
       font-size: .85rem;
       font-weight: 700;
@@ -140,10 +174,18 @@
       box-shadow: var(--shadow-sm);
     }
 
-    .lang-switch span { color: var(--cyan); }
+    .lang-segment {
+      min-width: clamp(2.45rem, 2.15rem + .7vw, 3.05rem);
+      padding: clamp(.48rem, .4rem + .2vw, .68rem) clamp(.65rem, .55rem + .25vw, .88rem);
+      border-radius: 999rem;
+      color: var(--muted);
+      text-align: center;
+      transition: color .2s ease, background .2s ease, box-shadow .2s ease;
+    }
 
-    .lang-switch:hover,
-    .lang-switch:focus-visible,
+    .lang-segment.current { background: var(--cyan); color: #fff; box-shadow: 0 .25rem .7rem rgba(2, 132, 199, .24); }
+    .lang-divider { color: var(--cyan); opacity: .72; }
+
     .filter-button:hover,
     .filter-button:focus-visible,
     .filter-button.active,
@@ -164,10 +206,12 @@
       color: #fff;
     }
 
-    .lang-switch:hover span,
-    .lang-switch:focus-visible span { color: #fff; }
+    .lang-switch:hover,
+    .lang-switch:focus-visible { outline: none; box-shadow: var(--focus-ring), var(--shadow-sm); }
+    .lang-switch:hover .lang-segment:not(.current) { color: var(--cyan); background: rgba(186, 230, 253, .55); }
 
     .hero {
+      position: relative;
       display: grid;
       grid-template-columns: minmax(0, 1.25fr) minmax(17rem, .75fr);
       align-items: center;
@@ -247,10 +291,10 @@
       min-height: clamp(21rem, 35vw, 27rem);
       padding: var(--space-6) var(--space-4);
       overflow: hidden;
-      border: var(--border) solid rgba(117, 197, 236, .72);
+      border: clamp(1.2px, .1vw, 1.8px) solid rgba(2, 132, 199, .62);
       border-radius: 44% 56% 51% 49% / 46% 43% 57% 54%;
-      background: radial-gradient(circle at 50% 42%, rgba(255, 255, 255, .86), rgba(186, 230, 253, .28) 58%, transparent 72%);
-      box-shadow: inset 0 0 clamp(3.5rem, 5vw, 5rem) rgba(14, 165, 233, .08), var(--shadow-lg);
+      background: radial-gradient(circle at 50% 42%, rgba(255, 255, 255, .92), rgba(125, 211, 252, .34) 58%, rgba(56, 189, 248, .11) 78%);
+      box-shadow: inset 0 0 clamp(3.5rem, 5vw, 5rem) rgba(2, 132, 199, .14), 0 1.4rem 3.4rem rgba(2, 132, 199, .2);
     }
 
     .langlands-hero::before,
@@ -264,10 +308,19 @@
     }
 
     .langlands-hero::after { inset: 20% 4%; border-style: dashed; transform: rotate(23deg); }
-    .langlands-object { position: relative; z-index: 1; text-align: center; font-family: Georgia, "Times New Roman", serif; }
-    .langlands-object.primary { color: var(--cyan); font: italic clamp(2.5rem, 4.4vw, 4.8rem)/1 Georgia, serif; text-shadow: 0 .7rem 2rem rgba(2, 132, 199, .14); }
-    .langlands-object.secondary { color: #245c7a; font: italic clamp(1.4rem, 2.2vw, 2.25rem)/1.2 Georgia, serif; }
-    .langlands-correspondence { position: relative; z-index: 1; display: flex; align-items: center; gap: var(--space-2); color: var(--muted); font: 600 clamp(.72rem, .68rem + .12vw, .8rem)/1 ui-monospace, monospace; letter-spacing: .08em; }
+    .langlands-geometry { position: absolute; inset: 5%; width: 90%; height: 90%; color: #0369a1; opacity: .64; }
+    .langlands-geometry .surface { fill: rgba(125, 211, 252, .16); stroke: currentColor; stroke-width: 2.2; }
+    .langlands-geometry .handle,
+    .langlands-geometry .spectral,
+    .langlands-geometry .fiber { fill: none; stroke: currentColor; stroke-width: 1.65; }
+    .langlands-geometry .spectral { stroke-dasharray: 5 5; }
+    .langlands-geometry .marked-point { fill: #0077b6; stroke: #fff; stroke-width: 1.5; }
+    .langlands-object { position: relative; z-index: 2; text-align: center; font-family: Georgia, "Times New Roman", serif; }
+    .math-operator { font-style: normal; letter-spacing: -.025em; }
+    .langlands-object.primary { color: #005f91; font: italic clamp(2.5rem, 4.4vw, 4.8rem)/1 Georgia, serif; text-shadow: 0 .55rem 1.5rem rgba(255, 255, 255, .9), 0 .7rem 2rem rgba(2, 132, 199, .24); }
+    .langlands-object.secondary { color: #123f59; font: italic clamp(1.4rem, 2.2vw, 2.25rem)/1.2 Georgia, serif; text-shadow: 0 .35rem 1rem rgba(255, 255, 255, .95); }
+    .langlands-correspondence { position: relative; z-index: 2; display: flex; align-items: center; gap: var(--space-2); color: #164d6b; font: 650 clamp(.76rem, .7rem + .15vw, .86rem)/1 Georgia, serif; letter-spacing: .03em; }
+    .langlands-caption { position: relative; z-index: 2; }
     .langlands-line { position: relative; width: clamp(2rem, 3vw, 3rem); height: var(--border); background: var(--cyan); }
     .langlands-line::after { content: ""; position: absolute; right: 0; top: clamp(-.25rem, -.16rem - .05vw, -.18rem); width: clamp(.34rem, .3rem + .1vw, .45rem); height: clamp(.34rem, .3rem + .1vw, .45rem); border-top: var(--border) solid var(--cyan); border-right: var(--border) solid var(--cyan); transform: rotate(45deg); }
 
@@ -278,9 +331,20 @@
     .interest-list { display: flex; flex-wrap: wrap; gap: var(--space-2); }
     .interest-list span { padding: var(--space-2) var(--space-3); border: var(--border) solid #75c5ec; border-radius: 999rem; background: rgba(255, 255, 255, .8); color: #164d6b; font-size: .9rem; box-shadow: var(--shadow-sm); }
 
-    section { padding: var(--section-space) 0; border-top: var(--border) solid var(--line); }
+    section,
+    .hero { scroll-margin-top: calc(var(--nav-height) + var(--space-3)); }
+    section { position: relative; isolation: isolate; padding: var(--section-space) 0; border-top: var(--border) solid var(--line); }
+    .js .reveal-section { opacity: 0; transform: translateY(clamp(1.25rem, 2vw, 2.2rem)); transition: opacity .72s cubic-bezier(.22, 1, .36, 1), transform .72s cubic-bezier(.22, 1, .36, 1); }
+    .js .reveal-section.is-visible { opacity: 1; transform: none; }
+    .section-arrival::after { content: ""; position: absolute; inset: var(--space-2) calc(0px - var(--space-3)); z-index: -1; border-radius: var(--radius-lg); animation: sectionArrival .9s cubic-bezier(.22, 1, .36, 1); }
+    @keyframes sectionArrival {
+      0% { background: rgba(14, 165, 233, .2); box-shadow: 0 0 0 var(--space-1) rgba(14, 165, 233, .12); }
+      100% { background: transparent; box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); }
+    }
     .sectionhead { display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-6); margin-bottom: var(--space-6); }
     .sectionhead h2 { margin: 0; font: 400 clamp(2.2rem, 1.5rem + 3vw, 4.6rem)/1.05 Georgia, serif; }
+    html[lang="en"] .sectionhead { grid-template-columns: minmax(7.5rem, .72fr) minmax(0, 2.28fr); gap: clamp(1.4rem, 3vw, 3rem); }
+    html[lang="en"] .sectionhead h2 { font-size: clamp(1.9rem, 1.35rem + 2.35vw, 3.75rem); line-height: 1.1; letter-spacing: -.025em; text-wrap: balance; }
     .about { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
     .about p { margin: 0; color: #315b73; font-size: 1.08rem; }
     .bio-column { display: grid; gap: var(--space-5); }
@@ -305,6 +369,7 @@
     .note-card:hover { transform: translateY(clamp(-5px, -.25vw, -3px)); border-color: var(--cyan); box-shadow: 0 1.35rem 3.25rem rgba(2, 132, 199, .16); }
     .topic .num { color: #477b96; }
     .topic h3 { margin: var(--space-5) 0 var(--space-2); font: 400 clamp(1.55rem, 1.35rem + .7vw, 1.9rem)/1.2 Georgia, serif; }
+    html[lang="en"] .topic h3 { font-size: clamp(1.32rem, 1.16rem + .55vw, 1.68rem); line-height: 1.27; text-wrap: balance; }
     .topic p { margin: 0; color: var(--muted); }
 
     .notes-intro { max-width: 48.75rem; margin: calc(0px - var(--space-4)) 0 var(--space-5); color: var(--muted); font-size: 1.05rem; }
@@ -323,6 +388,8 @@
     .note-card p { margin: 0; color: var(--muted); }
     .note-footer { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); margin-top: var(--space-5); }
     .note-status { min-width: 0; overflow-wrap: anywhere; color: var(--muted); font-size: .8rem; }
+    .note-meta { display: grid; min-width: 0; gap: var(--space-1); }
+    .note-updated { color: #477b96; font-size: .76rem; }
     .note-download { flex: 0 0 auto; }
     .note-download.unavailable { cursor: not-allowed; opacity: .55; }
     .public-controls { margin-top: 0; }
@@ -335,7 +402,12 @@
 
     .contact { display: flex; align-items: end; justify-content: space-between; gap: var(--space-6); }
     .contact h2 { max-width: 48.75rem; margin: 0; font: 400 clamp(3rem, 2rem + 4.5vw, 7rem)/.95 Georgia, serif; }
+    html[lang="en"] .contact h2 { font-size: clamp(2.45rem, 1.75rem + 3.4vw, 5.4rem); line-height: 1.02; letter-spacing: -.025em; text-wrap: balance; }
     .contact h2 span { color: var(--cyan); }
+    html[lang="en"] .interest-list span,
+    html[lang="en"] .filter-button,
+    html[lang="en"] .public-button { font-size: clamp(.76rem, .72rem + .08vw, .84rem); line-height: 1.2; }
+    html[lang="en"] .note-category { letter-spacing: .07em; line-height: 1.35; }
     .contact-info { display: grid; gap: var(--space-2); min-width: min(100%, 24.5rem); }
     .contact-info p { margin: 0 0 var(--space-2); color: var(--muted); }
     .email-row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-2) 0; border-bottom: var(--border) solid var(--line); }
@@ -364,6 +436,7 @@
       transform: translateY(-50%);
       backdrop-filter: blur(clamp(.65rem, .5rem + .4vw, 1rem));
       -webkit-backdrop-filter: blur(clamp(.65rem, .5rem + .4vw, 1rem));
+      transition: width .36s cubic-bezier(.22, 1, .36, 1), min-width .36s cubic-bezier(.22, 1, .36, 1), padding .36s cubic-bezier(.22, 1, .36, 1), transform .36s cubic-bezier(.22, 1, .36, 1);
     }
 
     .toc-header { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-1) var(--space-1) var(--space-2) var(--space-2); border-bottom: var(--border) solid var(--line); }
@@ -373,7 +446,7 @@
     .toc-links a { display: block; width: 100%; min-width: max-content; padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); color: var(--muted); font-size: .82rem; white-space: nowrap; }
     .toc-links a:hover,
     .toc-links a:focus-visible,
-    .toc-links a.active { outline: none; background: var(--cyan); color: #fff; }
+    .toc-links a.active { outline: none; background: var(--cyan); color: #fff; box-shadow: var(--focus-ring); transform: translateX(clamp(.08rem, .1vw, .16rem)); }
     .toc-expand { display: none; width: var(--control-size); min-width: var(--control-size); padding: 0; border-radius: var(--radius-sm); color: var(--cyan); font-size: var(--icon-size); }
     .toc-jumps { margin: 0; padding: 0; }
     .toc-jump { position: absolute; left: 50%; display: grid; place-items: center; width: clamp(2.8rem, 2.5rem + .65vw, 3.35rem); height: var(--control-size); padding: 0; border-radius: var(--radius-sm); color: var(--cyan); transform: translateX(-50%); }
@@ -387,13 +460,20 @@
     .page-toc.collapsed .toc-links { display: none; }
     .page-toc.collapsed .toc-expand { display: block; }
     .page-toc:not(.collapsed) .toc-expand { display: none; }
+    .sr-only { position: fixed; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
     @media (max-width: 56.25rem) {
       .notes-grid { grid-template-columns: 1fr 1fr; }
     }
 
+    @media (max-width: 68rem) {
+      .hero { grid-template-columns: 1fr; }
+      .langlands-hero { width: min(100%, 31rem); justify-self: center; }
+    }
+
     @media (max-width: 48rem) {
-      .shell { width: min(var(--max), calc(100% - clamp(1.5rem, 6vw, 2rem))); }
+      .shell,
+      body.toc-open .shell { width: min(var(--max), calc(100% - clamp(1.5rem, 6vw, 2rem))); margin-right: auto; margin-left: auto; }
       .hero { grid-template-columns: 1fr; gap: var(--space-5); padding: clamp(3.5rem, 12vw, 5rem) 0; }
       .hero h1 { font-size: clamp(3.7rem, 19vw, 6rem); }
       .langlands-hero { width: min(100%, 28rem); min-height: clamp(15rem, 70vw, 20rem); justify-self: center; }
@@ -401,6 +481,7 @@
       .sectionhead,
       .about { grid-template-columns: 1fr; }
       .sectionhead { gap: var(--space-3); }
+      html[lang="en"] .sectionhead { grid-template-columns: 1fr; gap: var(--space-3); }
       .topics,
       .notes-grid,
       .facts { grid-template-columns: 1fr; }
@@ -408,6 +489,8 @@
       .contact { align-items: start; flex-direction: column; }
       footer { flex-direction: column; }
       .page-toc { left: var(--space-1); }
+      .page-toc:not(.collapsed) { position: relative; top: auto; left: auto; width: min(22rem, calc(100% - var(--page-gutter) - var(--page-gutter))); min-width: 0; margin: calc(var(--control-size) + var(--space-5)) auto calc(var(--control-size) + var(--space-6)); transform: none; }
+      .page-toc:not(.collapsed) .toc-links a { min-width: 0; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -422,19 +505,26 @@
       .copy-button,
       .toc-collapse,
       .toc-expand,
-      .toc-jump { transition: none; }
+      .toc-jump,
+      .shell,
+      .page-toc,
+      .reveal-section { transition: none; animation: none; }
+      .js .reveal-section { opacity: 1; transform: none; }
+      .interaction-pulse,
+      .section-arrival::after { animation: none; }
     }
   </style>
 </head>
 <body>
   <aside class="page-toc" id="pageToc" aria-label="页面目录"><div class="toc-header"><span class="toc-title" data-zh="页面目录" data-en="Contents">页面目录</span><button class="toc-collapse" id="tocCollapse" type="button" aria-label="收起目录" data-zh="收起" data-en="Collapse">收起</button></div><button class="toc-expand" id="tocExpand" type="button" aria-label="展开目录" aria-expanded="false">☰</button><nav class="toc-links" aria-label="页内导航"><a href="#top" data-section="top" data-zh="首页" data-en="Home">首页</a><a href="#about" data-section="about" data-zh="关于" data-en="About">关于</a><a href="#research" data-section="research" data-zh="研究" data-en="Research">研究</a><a href="#notes" data-section="notes" data-zh="笔记" data-en="Notes">笔记</a><a href="#contact" data-section="contact" data-zh="联系" data-en="Contact">联系</a></nav><div class="toc-jumps"><button class="toc-jump" id="jumpTop" type="button" aria-label="返回页面顶部"><svg class="jump-glyph top" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 1V15M6 1L14 8L6 15"/></svg></button><button class="toc-jump" id="jumpBottom" type="button" aria-label="前往页面底部"><svg class="jump-glyph bottom" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 1V15M6 1L14 8L6 15"/></svg></button></div></aside>
   <canvas class="math-background" id="langlandsBackground" aria-hidden="true"></canvas>
+  <div class="sr-only" id="interactionStatus" role="status" aria-live="polite" aria-atomic="true"></div>
   <div class="shell">
-    <nav class="site-nav" aria-label="主导航"><span class="mark" data-zh="赵翌嘉" data-en="Yijia Zhao">赵翌嘉</span><div class="nav-actions"><button class="lang-switch" id="langSwitch" type="button" aria-label="Switch to English"><strong>中文</strong><span>/</span><strong>EN</strong></button></div></nav>
+    <nav class="site-nav" aria-label="主导航"><span class="mark" data-zh="赵翌嘉" data-en="Yijia Zhao">赵翌嘉</span><div class="nav-actions"><button class="lang-switch" id="langSwitch" type="button" aria-label="Switch to English"><span class="lang-segment current" data-language-indicator="zh">中文</span><span class="lang-divider" aria-hidden="true">/</span><span class="lang-segment" data-language-indicator="en">EN</span></button></div></nav>
     <main>
       <header class="hero" id="top">
         <div><div class="eyebrow" data-zh="基础数学 · 几何表示论" data-en="Pure Mathematics · Geometric Representation Theory">基础数学 · 几何表示论</div><h1 data-zh-html="&lt;i&gt;赵&lt;/i&gt;翌嘉" data-en-html="Yijia&lt;i&gt;Zhao&lt;/i&gt;"><i>赵</i>翌嘉</h1><p class="lead" data-zh="我的兴趣集中于几何表示论，以及代数几何结构如何组织并联系不同的表示论现象。我尤其关注几何 Satake 等价、Hikita 猜想与几何 Langlands 纲领，也希望从仿射 Grassmannian、反常层、幂零轨道与 Springer 消解等具体几何对象出发，理解范畴、上同调、模空间和对偶性之间的对应。" data-en="My interests center on geometric representation theory and on how structures from algebraic geometry organize and connect representation-theoretic phenomena. I am particularly interested in the geometric Satake equivalence, the Hikita conjecture, and the geometric Langlands program, and I study concrete geometric objects—including affine Grassmannians, perverse sheaves, nilpotent orbits, and the Springer resolution—to understand correspondences among categories, cohomology, moduli spaces, and dualities.">我的兴趣集中于几何表示论，以及代数几何结构如何组织并联系不同的表示论现象。我尤其关注几何 Satake 等价、Hikita 猜想与几何 Langlands 纲领，也希望从仿射 Grassmannian、反常层、幂零轨道与 Springer 消解等具体几何对象出发，理解范畴、上同调、模空间和对偶性之间的对应。</p><div class="actions"><a class="button primary" href="#research"><span data-zh="查看研究方向" data-en="Explore research">查看研究方向</span> <span aria-hidden="true">↓</span></a><a class="button" href="#notes" data-zh="浏览学习笔记" data-en="Browse notes">浏览学习笔记</a><a class="button" href="#about" data-zh="关于我" data-en="About me">关于我</a></div></div>
-        <div class="langlands-hero" aria-hidden="true"><div class="langlands-object primary">Bun<sub>G</sub>(X)</div><div class="langlands-correspondence"><span class="langlands-line"></span><span>Hecke<sub>x</sub></span><span class="langlands-line"></span></div><div class="langlands-object secondary">LocSys<sub>G∨</sub>(X)</div><div class="langlands-caption">Geometric Langlands</div></div>
+        <div class="langlands-hero" aria-hidden="true"><svg class="langlands-geometry" viewBox="0 0 360 360"><path class="surface" d="M44 96C40 52 104 45 146 82C168 101 192 101 214 82C256 45 320 52 316 96C321 140 257 147 214 112C192 94 168 94 146 112C103 147 39 140 44 96Z"/><ellipse class="handle" cx="103" cy="96" rx="32" ry="21" transform="rotate(-12 103 96)"/><ellipse class="handle" cx="257" cy="96" rx="32" ry="21" transform="rotate(12 257 96)"/><path class="spectral" d="M48 260C92 214 132 302 180 260C228 218 268 302 312 260"/><path class="spectral" d="M48 276C92 322 132 234 180 276C228 318 268 234 312 276"/><ellipse class="fiber" cx="112" cy="202" rx="34" ry="16" transform="rotate(-12 112 202)"/><ellipse class="fiber" cx="180" cy="188" rx="38" ry="18"/><ellipse class="fiber" cx="248" cy="202" rx="34" ry="16" transform="rotate(12 248 202)"/><circle class="marked-point" cx="292" cy="72" r="5"/></svg><div class="langlands-object primary"><span class="math-operator">Bun</span><sub>G</sub>(X)</div><div class="langlands-correspondence"><span class="langlands-line"></span><span><span class="math-operator">Hecke</span><sub>x</sub></span><span class="langlands-line"></span></div><div class="langlands-object secondary"><span class="math-operator">LocSys</span><sub>G<sup>∨</sup></sub>(X)</div><div class="langlands-caption">Geometric Langlands</div></div>
       </header>
       <section class="interest-bar" id="interests"><header><h2 data-zh="研究方向" data-en="Research Interests">研究方向</h2><span class="kicker" data-zh="研究兴趣" data-en="RESEARCH INTERESTS">研究兴趣</span></header><div class="interest-list"><span data-zh="几何表示论" data-en="Geometric Representation Theory">几何表示论</span><span data-zh="代数几何" data-en="Algebraic Geometry">代数几何</span><span data-zh="表示论" data-en="Representation Theory">表示论</span><span data-zh="代数群" data-en="Algebraic Groups">代数群</span><span data-zh="仿射 Grassmannian" data-en="Affine Grassmannians">仿射 Grassmannian</span><span data-zh="反常层与导出范畴" data-en="Perverse Sheaves & Derived Categories">反常层与导出范畴</span><span data-zh="Springer–Slodowy 几何" data-en="Springer–Slodowy Geometry">Springer–Slodowy 几何</span><span data-zh="Kazhdan–Lusztig 理论" data-en="Kazhdan–Lusztig Theory">Kazhdan–Lusztig 理论</span><span data-zh="几何不变量理论" data-en="Geometric Invariant Theory">几何不变量理论</span><span data-zh="Hikita 猜想" data-en="Hikita Conjecture">Hikita 猜想</span><span data-zh="几何 Langlands 纲领" data-en="Geometric Langlands Program">几何 Langlands 纲领</span></div></section>
       <section id="about"><div class="sectionhead"><span class="kicker" data-zh="01 / 个人简介" data-en="01 / PROFILE">01 / 个人简介</span><h2 data-zh="在几何对象与表示论结构之间" data-en="Between geometric objects and representation-theoretic structures">在几何对象与表示论结构之间</h2></div><div class="about"><div class="bio-column"><p data-zh="我目前在四川大学攻读数学研究生，并计划继续从事基础数学研究。我的兴趣以几何表示论为中心，重视具体几何对象与表示论结构之间的对应：例如仿射 Grassmannian 上的反常层与卷积、幂零轨道与 Springer–Slodowy 几何、Schubert 几何与 Kazhdan–Lusztig 理论，以及模空间、局部系统和 Langlands 对偶所联系的范畴结构。我也关注 Hikita 猜想中辛几何、上同调与量子化之间的关系。" data-en="I am currently a graduate student in mathematics at Sichuan University and intend to continue research in pure mathematics. My interests center on geometric representation theory, with an emphasis on correspondences between concrete geometric objects and representation-theoretic structures: perverse sheaves and convolution on affine Grassmannians; nilpotent orbits and Springer–Slodowy geometry; Schubert geometry and Kazhdan–Lusztig theory; and the categorical structures connecting moduli spaces, local systems, and Langlands duality. I am also interested in the relations among symplectic geometry, cohomology, and quantization that arise around the Hikita conjecture.">我目前在四川大学攻读数学研究生，并计划继续从事基础数学研究。我的兴趣以几何表示论为中心，重视具体几何对象与表示论结构之间的对应：例如仿射 Grassmannian 上的反常层与卷积、幂零轨道与 Springer–Slodowy 几何、Schubert 几何与 Kazhdan–Lusztig 理论，以及模空间、局部系统和 Langlands 对偶所联系的范畴结构。我也关注 Hikita 猜想中辛几何、上同调与量子化之间的关系。</p><div class="education"><h3 data-zh="教育经历" data-en="EDUCATION">教育经历</h3><div class="edu-item"><span class="edu-period">2021–2025</span><strong data-zh="四川大学 · 数学强基计划" data-en="Sichuan University · Strong Foundation Program in Mathematics">四川大学 · 数学强基计划</strong><small data-zh="本科阶段" data-en="Undergraduate studies">本科阶段</small></div><div class="edu-item"><span class="edu-period" data-zh="目前" data-en="PRESENT">目前</span><strong data-zh="四川大学 · 数学研究生" data-en="Sichuan University · Graduate Student in Mathematics">四川大学 · 数学研究生</strong><small data-zh="研究生阶段" data-en="Graduate studies">研究生阶段</small></div></div></div><div class="facts"><div class="fact"><b data-zh="学科" data-en="DISCIPLINE">学科</b><span data-zh="基础数学" data-en="Pure Mathematics">基础数学</span></div><div class="fact"><b data-zh="研究重点" data-en="FOCUS">研究重点</b><span data-zh="几何表示论" data-en="Geometric Representation Theory">几何表示论</span></div><div class="fact"><b data-zh="研究工具" data-en="RESEARCH TOOLS">研究工具</b><span data-zh="代数几何 · 表示论" data-en="Algebraic Geometry · Representation Theory">代数几何 · 表示论</span></div><div class="fact"><b data-zh="我所使用语言" data-en="LANGUAGES I USE">我所使用语言</b><span data-zh="中文 / 英语" data-en="Chinese / English">中文 / 英语</span></div></div></div></section>
@@ -443,8 +533,9 @@
         <div class="sectionhead"><span class="kicker" data-zh="03 / 学习笔记" data-en="03 / NOTES">03 / 学习笔记</span><h2 data-zh="笔记" data-en="Notes">笔记</h2></div>
         <p class="notes-intro" data-zh="这里公开展示几何表示论、代数几何与表示论相关的学习笔记。访客可以按主题筛选、搜索并下载已经发布的 PDF。" data-en="This section publicly presents study notes in geometric representation theory, algebraic geometry, and representation theory. Visitors can filter, search, and download published PDFs.">这里公开展示几何表示论、代数几何与表示论相关的学习笔记。访客可以按主题筛选、搜索并下载已经发布的 PDF。</p>
         <div class="notes-toolbar"><div class="note-filters" role="group" aria-label="笔记分类"><button class="filter-button active" type="button" data-filter="all" data-zh="全部" data-en="All">全部</button><button class="filter-button" type="button" data-filter="geometric-representation" data-zh="几何表示论" data-en="Geometric Representation">几何表示论</button><button class="filter-button" type="button" data-filter="algebraic-geometry" data-zh="代数几何" data-en="Algebraic Geometry">代数几何</button><button class="filter-button" type="button" data-filter="representation-theory" data-zh="表示论" data-en="Representation Theory">表示论</button></div></div>
-        <div class="public-controls"><input class="public-search" id="noteSearch" type="search" data-placeholder-zh="搜索笔记标题或内容" data-placeholder-en="Search note titles or descriptions" placeholder="搜索笔记标题或内容"><div><button class="public-button active" id="sortDefault" type="button" data-zh="默认顺序" data-en="Default order">默认顺序</button> <button class="public-button" id="sortTitle" type="button" data-zh="按标题排序" data-en="Sort by title">按标题排序</button></div></div>
-        <div class="notes-grid"><article class="note-card" data-category="geometric-representation"><div><span class="note-category" data-zh="几何表示论" data-en="GEOMETRIC REPRESENTATION THEORY">几何表示论</span><h3 data-zh="几何 Satake 学习笔记" data-en="Notes on Geometric Satake">几何 Satake 学习笔记</h3><p data-zh="仿射 Grassmannian、卷积、反常层与 Tannakian 重构。" data-en="Affine Grassmannians, convolution, perverse sheaves, and Tannakian reconstruction.">仿射 Grassmannian、卷积、反常层与 Tannakian 重构。</p></div><div class="note-footer"><span class="note-status"><code>geometric-satake-notes.pdf</code></span><a class="note-download unavailable" href="notes/geometric-satake-notes.pdf" download data-note-file="notes/geometric-satake-notes.pdf" data-zh="检查中" data-en="Checking">检查中</a></div></article><article class="note-card" data-category="algebraic-geometry geometric-representation"><div><span class="note-category" data-zh="代数几何 · 层论" data-en="ALGEBRAIC GEOMETRY · SHEAF THEORY">代数几何 · 层论</span><h3 data-zh="反常层学习笔记" data-en="Notes on Perverse Sheaves">反常层学习笔记</h3><p data-zh="反常 t-结构、交叉上同调与 Verdier 对偶。" data-en="Perverse t-structures, intersection cohomology, and Verdier duality.">反常 t-结构、交叉上同调与 Verdier 对偶。</p></div><div class="note-footer"><span class="note-status"><code>perverse-sheaves-notes.pdf</code></span><a class="note-download unavailable" href="notes/perverse-sheaves-notes.pdf" download data-note-file="notes/perverse-sheaves-notes.pdf" data-zh="检查中" data-en="Checking">检查中</a></div></article><article class="note-card" data-category="geometric-representation representation-theory"><div><span class="note-category" data-zh="几何表示论 · 表示论" data-en="GEOMETRIC REPRESENTATION · REPRESENTATION THEORY">几何表示论 · 表示论</span><h3 data-zh="Springer 理论学习笔记" data-en="Notes on Springer Theory">Springer 理论学习笔记</h3><p data-zh="幂零轨道、Springer 消解、Springer 纤维与 Weyl 群表示。" data-en="Nilpotent orbits, the Springer resolution, Springer fibers, and Weyl group representations.">幂零轨道、Springer 消解、Springer 纤维与 Weyl 群表示。</p></div><div class="note-footer"><span class="note-status"><code>springer-theory-notes.pdf</code></span><a class="note-download unavailable" href="notes/springer-theory-notes.pdf" download data-note-file="notes/springer-theory-notes.pdf" data-zh="检查中" data-en="Checking">检查中</a></div></article></div>
+        <div class="public-controls"><input class="public-search" id="noteSearch" type="search" data-placeholder-zh="搜索笔记标题或内容" data-placeholder-en="Search note titles or descriptions" placeholder="搜索笔记标题或内容"><div role="group" aria-label="笔记日期排序"><button class="public-button active" id="sortNewest" type="button" data-sort="newest" data-zh="从新到旧" data-en="Newest first">从新到旧</button> <button class="public-button" id="sortOldest" type="button" data-sort="oldest" data-zh="从旧到新" data-en="Oldest first">从旧到新</button></div></div>
+        <!-- Update notes/metadata.json when publishing a note. data-updated and the file's Last-Modified header remain compatible fallbacks. -->
+        <div class="notes-grid"><article class="note-card" data-category="geometric-representation" data-updated=""><div><span class="note-category" data-zh="几何表示论" data-en="GEOMETRIC REPRESENTATION THEORY">几何表示论</span><h3 data-zh="几何 Satake 学习笔记" data-en="Notes on Geometric Satake">几何 Satake 学习笔记</h3><p data-zh="仿射 Grassmannian、卷积、反常层与 Tannakian 重构。" data-en="Affine Grassmannians, convolution, perverse sheaves, and Tannakian reconstruction.">仿射 Grassmannian、卷积、反常层与 Tannakian 重构。</p></div><div class="note-footer"><div class="note-meta"><span class="note-status"><code>geometric-satake-notes.pdf</code></span><time class="note-updated" datetime="">更新日期：尚未记录</time></div><a class="note-download unavailable" href="notes/geometric-satake-notes.pdf" download data-note-file="notes/geometric-satake-notes.pdf" data-zh="检查中" data-en="Checking">检查中</a></div></article><article class="note-card" data-category="algebraic-geometry geometric-representation" data-updated=""><div><span class="note-category" data-zh="代数几何 · 层论" data-en="ALGEBRAIC GEOMETRY · SHEAF THEORY">代数几何 · 层论</span><h3 data-zh="反常层学习笔记" data-en="Notes on Perverse Sheaves">反常层学习笔记</h3><p data-zh="反常 t-结构、交叉上同调与 Verdier 对偶。" data-en="Perverse t-structures, intersection cohomology, and Verdier duality.">反常 t-结构、交叉上同调与 Verdier 对偶。</p></div><div class="note-footer"><div class="note-meta"><span class="note-status"><code>perverse-sheaves-notes.pdf</code></span><time class="note-updated" datetime="">更新日期：尚未记录</time></div><a class="note-download unavailable" href="notes/perverse-sheaves-notes.pdf" download data-note-file="notes/perverse-sheaves-notes.pdf" data-zh="检查中" data-en="Checking">检查中</a></div></article><article class="note-card" data-category="geometric-representation representation-theory" data-updated=""><div><span class="note-category" data-zh="几何表示论 · 表示论" data-en="GEOMETRIC REPRESENTATION · REPRESENTATION THEORY">几何表示论 · 表示论</span><h3 data-zh="Springer 理论学习笔记" data-en="Notes on Springer Theory">Springer 理论学习笔记</h3><p data-zh="幂零轨道、Springer 消解、Springer 纤维与 Weyl 群表示。" data-en="Nilpotent orbits, the Springer resolution, Springer fibers, and Weyl group representations.">幂零轨道、Springer 消解、Springer 纤维与 Weyl 群表示。</p></div><div class="note-footer"><div class="note-meta"><span class="note-status"><code>springer-theory-notes.pdf</code></span><time class="note-updated" datetime="">更新日期：尚未记录</time></div><a class="note-download unavailable" href="notes/springer-theory-notes.pdf" download data-note-file="notes/springer-theory-notes.pdf" data-zh="检查中" data-en="Checking">检查中</a></div></article></div>
         <div class="notes-empty" id="notesEmpty" hidden data-zh="没有符合条件的笔记。" data-en="No notes match the current filters.">没有符合条件的笔记。</div>
       </section>
       <section id="contact"><div class="contact"><h2 data-zh-html="用代数几何研究表示论，&lt;span&gt;揭示不同领域之间的联系。&lt;/span&gt;" data-en-html="Study representation theory through algebraic geometry, &lt;span&gt;revealing connections across mathematical fields.&lt;/span&gt;">用代数几何研究表示论，<span>揭示不同领域之间的联系。</span></h2><div class="contact-info"><p data-zh="欢迎围绕几何 Satake、Springer–Slodowy 几何、Hikita 猜想、几何 Langlands 及相关代数几何与表示论问题进行学术交流。" data-en="I welcome academic conversations on geometric Satake, Springer–Slodowy geometry, the Hikita conjecture, geometric Langlands, and related questions in algebraic geometry and representation theory.">欢迎围绕几何 Satake、Springer–Slodowy 几何、Hikita 猜想、几何 Langlands 及相关代数几何与表示论问题进行学术交流。</p><div class="email-row"><span class="email-address">2030258770@qq.com</span><button class="copy-button" type="button" data-email="2030258770@qq.com" data-zh="复制" data-en="Copy" aria-live="polite">复制</button></div><div class="email-row"><span class="email-address">zhao2030258770@gmail.com</span><button class="copy-button" type="button" data-email="zhao2030258770@gmail.com" data-zh="复制" data-en="Copy" aria-live="polite">复制</button></div></div></div></section>
@@ -473,10 +564,43 @@
 
         const label = (text, x, y, align = 'left') => {
           ctx.save();
-          ctx.fillStyle = 'rgba(13, 56, 84, .48)';
+          ctx.fillStyle = 'rgba(13, 56, 84, .78)';
           ctx.font = `italic ${labelSize}px Georgia, serif`;
           ctx.textAlign = align;
           ctx.fillText(text, x, y);
+          ctx.restore();
+        };
+
+        const mathLabel = ({ operator, subscript = '', dual = false, suffix = '' }, x, y, align = 'center') => {
+          ctx.save();
+          ctx.fillStyle = 'rgba(13, 56, 84, .82)';
+          const operatorFont = `${labelSize}px Georgia, serif`;
+          const subscriptFont = `${labelSize * .68}px Georgia, serif`;
+          const dualFont = `${labelSize * .52}px Georgia, serif`;
+          ctx.font = operatorFont;
+          const operatorWidth = ctx.measureText(operator).width;
+          ctx.font = subscriptFont;
+          const subscriptWidth = ctx.measureText(subscript).width;
+          ctx.font = operatorFont;
+          const suffixWidth = ctx.measureText(suffix).width;
+          const dualWidth = dual ? labelSize * .44 : 0;
+          const totalWidth = operatorWidth + subscriptWidth + dualWidth + suffixWidth;
+          let cursor = align === 'center' ? x - totalWidth / 2 : align === 'right' ? x - totalWidth : x;
+          ctx.textAlign = 'left';
+          ctx.font = operatorFont;
+          ctx.fillText(operator, cursor, y);
+          cursor += operatorWidth;
+          if (subscript) {
+            ctx.font = subscriptFont;
+            ctx.fillText(subscript, cursor, y + labelSize * .28);
+            if (dual) {
+              ctx.font = dualFont;
+              ctx.fillText('∨', cursor + subscriptWidth * .9, y - labelSize * .22);
+            }
+            cursor += subscriptWidth + dualWidth;
+          }
+          ctx.font = operatorFont;
+          ctx.fillText(suffix, cursor, y);
           ctx.restore();
         };
 
@@ -493,21 +617,21 @@
           ctx.stroke();
         };
 
-        const wave = (x, y, length, amplitude, phase = 0) => {
+        const wave = (x, y, length, amplitude, phase = 0, cycles = 1) => {
           ctx.beginPath();
           for (let step = 0; step <= 80; step += 1) {
             const t = step / 80;
             const px = x + t * length;
-            const py = y + Math.sin(t * Math.PI * 2 + phase) * amplitude * (.75 + .25 * Math.cos(t * Math.PI * 2));
+            const py = y + Math.sin(t * Math.PI * 2 * cycles + phase) * amplitude * (.75 + .25 * Math.cos(t * Math.PI * 2));
             if (step === 0) ctx.moveTo(px, py);
             else ctx.lineTo(px, py);
           }
           ctx.stroke();
         };
 
-        // A quiet family of curved trajectories gives the page depth without using root-system motifs.
+        // Curved trajectories give the geometric background additional depth.
         ctx.lineWidth = lineWidth;
-        ctx.strokeStyle = 'rgba(2, 132, 199, .09)';
+        ctx.strokeStyle = 'rgba(2, 132, 199, .18)';
         for (let index = 0; index < 7; index += 1) {
           const y = height * (.08 + index * .145);
           ctx.beginPath();
@@ -522,8 +646,8 @@
         const curveY = height * .23;
         const curveRadius = Math.min(width, height) * (compact ? .12 : .145);
         ctx.lineWidth = lineWidth * 1.5;
-        ctx.strokeStyle = 'rgba(3, 105, 161, .34)';
-        ctx.fillStyle = 'rgba(186, 230, 253, .12)';
+        ctx.strokeStyle = 'rgba(3, 105, 161, .68)';
+        ctx.fillStyle = 'rgba(186, 230, 253, .22)';
         ctx.beginPath();
         ctx.moveTo(curveX - curveRadius * 1.45, curveY);
         ctx.bezierCurveTo(curveX - curveRadius * 1.5, curveY - curveRadius, curveX - curveRadius * .25, curveY - curveRadius, curveX, curveY);
@@ -538,7 +662,7 @@
         ctx.stroke();
         const markedX = curveX + curveRadius * 1.08;
         const markedY = curveY - curveRadius * .48;
-        ctx.fillStyle = 'rgba(2, 132, 199, .58)';
+        ctx.fillStyle = 'rgba(2, 132, 199, .86)';
         ctx.beginPath();
         ctx.arc(markedX, markedY, clamp(2.4, width / 450, 4), 0, Math.PI * 2);
         ctx.fill();
@@ -551,31 +675,44 @@
         const spectralLength = width * (compact ? .48 : .34);
         const spectralAmplitude = clamp(12, Math.min(width, height) * .032, 28);
         ctx.lineWidth = lineWidth * 1.25;
-        ctx.strokeStyle = 'rgba(3, 105, 161, .28)';
+        ctx.strokeStyle = 'rgba(3, 105, 161, .52)';
         wave(spectralX, spectralY + spectralAmplitude * 1.9, spectralLength, spectralAmplitude * .42);
-        ctx.strokeStyle = 'rgba(2, 132, 199, .46)';
-        wave(spectralX, spectralY, spectralLength, spectralAmplitude, 0);
-        wave(spectralX, spectralY, spectralLength, spectralAmplitude, Math.PI);
-        ctx.fillStyle = 'rgba(2, 132, 199, .5)';
-        [0, .5, 1].forEach((t) => {
+        ctx.strokeStyle = 'rgba(2, 132, 199, .72)';
+        wave(spectralX, spectralY, spectralLength, spectralAmplitude, 0, 1.5);
+        wave(spectralX, spectralY, spectralLength, spectralAmplitude, Math.PI, 1.5);
+        ctx.fillStyle = 'rgba(2, 132, 199, .8)';
+        [0, 1 / 3, 2 / 3, 1].forEach((t) => {
           const px = spectralX + spectralLength * t;
           ctx.beginPath();
           ctx.arc(px, spectralY, clamp(2, width / 520, 3.5), 0, Math.PI * 2);
           ctx.fill();
         });
-        ctx.strokeStyle = 'rgba(3, 105, 161, .26)';
+        ctx.strokeStyle = 'rgba(3, 105, 161, .55)';
         arrow(spectralX + spectralLength * .5, spectralY + spectralAmplitude * .3, spectralX + spectralLength * .5, spectralY + spectralAmplitude * 1.45);
         label('Σₐ', spectralX + spectralLength * .5, spectralY - spectralAmplitude * 1.5, 'center');
         label('π : Σₐ → X', spectralX + spectralLength * .5, spectralY + spectralAmplitude * 3.1, 'center');
 
         if (!compact) {
+          // Nested Schubert strata in the affine Grassmannian.
+          const grassmannianX = width * .55;
+          const grassmannianY = height * .2;
+          ctx.strokeStyle = 'rgba(3, 105, 161, .58)';
+          ctx.lineWidth = lineWidth * 1.15;
+          [1, .72, .44].forEach((scale, index) => {
+            ctx.beginPath();
+            ctx.ellipse(grassmannianX, grassmannianY, width * .074 * scale, height * .07 * scale, -.18 + index * .18, 0, Math.PI * 2);
+            ctx.stroke();
+          });
+          mathLabel({ operator: 'Gr', subscript: 'G' }, grassmannianX, grassmannianY + height * .105);
+          label('Schubert strata', grassmannianX, grassmannianY + height * .135, 'center');
+
           // Hecke correspondence: the arrows and moduli objects are shown together.
           const heckeY = height * .48;
           const leftNode = width * .11;
           const centerNode = width * .27;
           const rightNode = width * .43;
           ctx.lineWidth = lineWidth * 1.2;
-          ctx.strokeStyle = 'rgba(3, 105, 161, .27)';
+          ctx.strokeStyle = 'rgba(3, 105, 161, .58)';
           [leftNode, centerNode, rightNode].forEach((x, index) => {
             ctx.beginPath();
             ctx.ellipse(x, heckeY, width * (index === 1 ? .052 : .044), height * (index === 1 ? .047 : .04), 0, 0, Math.PI * 2);
@@ -583,15 +720,15 @@
           });
           arrow(centerNode - width * .055, heckeY, leftNode + width * .048, heckeY);
           arrow(centerNode + width * .055, heckeY, rightNode - width * .048, heckeY);
-          label('Bun_G(X)', leftNode, heckeY + height * .075, 'center');
-          label('Heckeₓ', centerNode, heckeY + height * .075, 'center');
-          label('Bun_G(X)', rightNode, heckeY + height * .075, 'center');
+          mathLabel({ operator: 'Bun', subscript: 'G', suffix: '(X)' }, leftNode, heckeY + height * .075);
+          mathLabel({ operator: 'Hecke', subscript: 'x' }, centerNode, heckeY + height * .075);
+          mathLabel({ operator: 'Bun', subscript: 'G', suffix: '(X)' }, rightNode, heckeY + height * .075);
 
           // Hitchin fibration: schematic abelian fibers over points of the Hitchin base 𝒜_G.
           const hitchinX = width * .65;
           const hitchinY = height * .82;
           const hitchinLength = width * .27;
-          ctx.strokeStyle = 'rgba(3, 105, 161, .25)';
+          ctx.strokeStyle = 'rgba(3, 105, 161, .56)';
           ctx.beginPath();
           ctx.moveTo(hitchinX, hitchinY);
           ctx.bezierCurveTo(hitchinX + hitchinLength * .35, hitchinY - height * .025, hitchinX + hitchinLength * .65, hitchinY + height * .025, hitchinX + hitchinLength, hitchinY);
@@ -605,7 +742,22 @@
             ctx.stroke();
             arrow(px, py - height * .07, px, py - height * .012);
           }
-          label('h : Higgs_G(X) → 𝒜_G', hitchinX + hitchinLength * .5, hitchinY + height * .07, 'center');
+          label('Hitchin fibration  h', hitchinX + hitchinLength * .5, hitchinY + height * .062, 'center');
+          mathLabel({ operator: '𝒜', subscript: 'G' }, hitchinX + hitchinLength * .92, hitchinY + height * .01);
+
+          // Based loops schematically encode monodromy data of a dual-group local system on X.
+          const localSystemX = width * .79;
+          const localSystemY = height * .49;
+          ctx.strokeStyle = 'rgba(3, 105, 161, .6)';
+          ctx.beginPath();
+          ctx.ellipse(localSystemX - width * .025, localSystemY, width * .034, height * .032, -.24, 0, Math.PI * 2);
+          ctx.ellipse(localSystemX + width * .025, localSystemY, width * .034, height * .032, .24, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.fillStyle = 'rgba(2, 132, 199, .82)';
+          ctx.beginPath();
+          ctx.arc(localSystemX, localSystemY, clamp(2.2, width / 500, 3.8), 0, Math.PI * 2);
+          ctx.fill();
+          mathLabel({ operator: 'LocSys', subscript: 'G', dual: true, suffix: '(X)' }, localSystemX, height * .56);
         }
       };
       drawLanglandsBackground();
@@ -615,9 +767,88 @@
         resizeFrame = requestAnimationFrame(drawLanglandsBackground);
       });
 
+      document.documentElement.classList.add('js');
+      const SITE_CONFIG = Object.freeze({
+        defaultLanguage: 'zh',
+        noteMetadataPath: 'notes/metadata.json',
+        timeZone: 'Asia/Shanghai',
+        timeZoneLabel: Object.freeze({ zh: '北京时间 UTC+8', en: 'Beijing Time, UTC+8' })
+      });
       const languageButton = document.getElementById('langSwitch');
+      const languageIndicators = Array.from(languageButton.querySelectorAll('[data-language-indicator]'));
       const notesSection = document.getElementById('notes');
       const topics = document.querySelector('.topics');
+      const noteGrid = notesSection.querySelector('.notes-grid');
+      const noteCards = Array.from(noteGrid.querySelectorAll('.note-card'));
+      const noteSearch = document.getElementById('noteSearch');
+      const siteNav = document.querySelector('.site-nav');
+      const pageToc = document.getElementById('pageToc');
+      const tocLinks = pageToc.querySelector('.toc-links');
+      const tocCollapse = document.getElementById('tocCollapse');
+      const tocExpand = document.getElementById('tocExpand');
+      const interactionStatus = document.getElementById('interactionStatus');
+      const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let language = localStorage.getItem('site-language');
+      if (!['zh', 'en'].includes(language)) language = SITE_CONFIG.defaultLanguage;
+      let announcementTimer;
+
+      noteCards.forEach((card, index) => { card.dataset.originalIndex = String(index); });
+
+      const announce = (message) => {
+        window.clearTimeout(announcementTimer);
+        interactionStatus.textContent = '';
+        announcementTimer = window.setTimeout(() => { interactionStatus.textContent = message; }, 20);
+      };
+
+      const pulseControl = (control) => {
+        control.classList.remove('interaction-pulse');
+        window.requestAnimationFrame(() => {
+          control.classList.add('interaction-pulse');
+          control.addEventListener('animationend', () => control.classList.remove('interaction-pulse'), { once: true });
+        });
+      };
+
+      document.addEventListener('click', (event) => {
+        const control = event.target.closest('button, .button, .note-download, .toc-links a');
+        if (control) pulseControl(control);
+      });
+
+      const parseNoteDate = (value) => {
+        if (!value) return null;
+        const parsed = /^\d{4}-\d{2}-\d{2}$/.test(value) ? new Date(`${value}T12:00:00+08:00`) : new Date(value);
+        return Number.isNaN(parsed.getTime()) ? null : parsed;
+      };
+
+      const formatBeijingDateTime = (date) => new Intl.DateTimeFormat('en-CA', {
+        timeZone: SITE_CONFIG.timeZone,
+        year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+      }).formatToParts(date).reduce((result, part) => {
+        if (part.type !== 'literal') result[part.type] = part.value;
+        return result;
+      }, {});
+
+      const renderNoteDates = () => {
+        noteCards.forEach((card) => {
+          const time = card.querySelector('.note-updated');
+          const date = parseNoteDate(card.dataset.updated);
+          if (!date) {
+            time.dateTime = '';
+            time.textContent = language === 'zh' ? '更新日期：尚未记录' : 'Updated: not recorded';
+            return;
+          }
+          time.dateTime = date.toISOString();
+          const parts = formatBeijingDateTime(date);
+          time.textContent = language === 'zh'
+            ? `更新：${parts.year}年${parts.month}月${parts.day}日 ${parts.hour}:${parts.minute}（${SITE_CONFIG.timeZoneLabel.zh}）`
+            : `Updated: ${parts.year}-${parts.month}-${parts.day} ${parts.hour}:${parts.minute} (${SITE_CONFIG.timeZoneLabel.en})`;
+        });
+      };
+
+      const syncTocReserve = () => {
+        if (pageToc.classList.contains('collapsed') || window.innerWidth <= 768) return;
+        const reserve = Math.ceil(pageToc.getBoundingClientRect().right + 16);
+        document.documentElement.style.setProperty('--toc-reserve', `${reserve}px`);
+      };
 
       const applyLanguage = (lang) => {
         document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
@@ -625,29 +856,68 @@
         document.querySelector('meta[name="description"]').content = lang === 'zh'
           ? '赵翌嘉的个人学术主页，关注几何表示论、几何 Satake 等价、Hikita 猜想与几何 Langlands 纲领。'
           : 'The academic website of Yijia Zhao, focused on geometric representation theory, the geometric Satake equivalence, the Hikita conjecture, and the geometric Langlands program.';
-        document.querySelectorAll('[data-zh]').forEach((node) => {
-          node.textContent = node.dataset[lang];
-        });
-        document.querySelectorAll('[data-zh-html]').forEach((node) => {
-          node.innerHTML = node.dataset[`${lang}Html`];
-        });
+        document.querySelectorAll('[data-zh]').forEach((node) => { node.textContent = node.dataset[lang]; });
+        document.querySelectorAll('[data-zh-html]').forEach((node) => { node.innerHTML = node.dataset[`${lang}Html`]; });
         languageButton.setAttribute('aria-label', lang === 'zh' ? 'Switch to English' : '切换到中文');
-        languageButton.setAttribute('aria-pressed', lang === 'en' ? 'true' : 'false');
-        const noteSearch = document.getElementById('noteSearch');
+        languageButton.dataset.currentLanguage = lang;
+        languageIndicators.forEach((indicator) => {
+          const current = indicator.dataset.languageIndicator === lang;
+          indicator.classList.toggle('current', current);
+          if (current) indicator.setAttribute('aria-current', 'true');
+          else indicator.removeAttribute('aria-current');
+        });
         noteSearch.placeholder = lang === 'zh' ? noteSearch.dataset.placeholderZh : noteSearch.dataset.placeholderEn;
+        siteNav.setAttribute('aria-label', lang === 'zh' ? '主导航' : 'Main navigation');
+        pageToc.setAttribute('aria-label', lang === 'zh' ? '页面目录' : 'Page contents');
+        tocLinks.setAttribute('aria-label', lang === 'zh' ? '页内导航' : 'On-page navigation');
         document.querySelector('.note-filters').setAttribute('aria-label', lang === 'zh' ? '笔记分类' : 'Note categories');
+        document.querySelector('[data-sort]').parentElement.setAttribute('aria-label', lang === 'zh' ? '笔记日期排序' : 'Sort notes by date');
         document.getElementById('jumpTop').setAttribute('aria-label', lang === 'zh' ? '返回页面顶部' : 'Go to the top of the page');
         document.getElementById('jumpBottom').setAttribute('aria-label', lang === 'zh' ? '前往页面底部' : 'Go to the bottom of the page');
-        document.getElementById('tocCollapse').setAttribute('aria-label', lang === 'zh' ? '收起目录' : 'Collapse contents');
-        document.getElementById('tocExpand').setAttribute('aria-label', lang === 'zh' ? '展开目录' : 'Expand contents');
+        tocCollapse.setAttribute('aria-label', lang === 'zh' ? '收起目录' : 'Collapse contents');
+        tocExpand.setAttribute('aria-label', lang === 'zh' ? '展开目录' : 'Expand contents');
+        renderNoteDates();
         localStorage.setItem('site-language', lang);
+        window.requestAnimationFrame(syncTocReserve);
       };
-      let language = localStorage.getItem('site-language') || 'zh';
+      const updateNoteVisibility = () => {
+        const filter = document.querySelector('.filter-button.active')?.dataset.filter || 'all';
+        const query = noteSearch.value.trim().toLocaleLowerCase();
+        let visibleCount = 0;
+        noteCards.forEach((card) => {
+          const categoryMatches = filter === 'all' || card.dataset.category.split(' ').includes(filter);
+          const searchable = `${card.querySelector('h3').dataset[language]} ${card.querySelector('p').dataset[language]}`.toLocaleLowerCase();
+          card.hidden = !categoryMatches || Boolean(query && !searchable.includes(query));
+          if (!card.hidden) visibleCount += 1;
+        });
+        document.getElementById('notesEmpty').hidden = visibleCount !== 0;
+      };
+
+      const sortNoteCards = (direction, shouldAnnounce = true) => {
+        const sorted = [...noteCards].sort((a, b) => {
+          const aDate = parseNoteDate(a.dataset.updated);
+          const bDate = parseNoteDate(b.dataset.updated);
+          if (!aDate && !bDate) return Number(a.dataset.originalIndex) - Number(b.dataset.originalIndex);
+          if (!aDate) return 1;
+          if (!bDate) return -1;
+          return direction === 'newest' ? bDate - aDate : aDate - bDate;
+        });
+        sorted.forEach((card) => noteGrid.appendChild(card));
+        document.querySelectorAll('[data-sort]').forEach((button) => button.classList.toggle('active', button.dataset.sort === direction));
+        if (shouldAnnounce) {
+          announce(language === 'zh'
+            ? (direction === 'newest' ? '笔记已按从新到旧排序' : '笔记已按从旧到新排序')
+            : (direction === 'newest' ? 'Notes sorted newest first' : 'Notes sorted oldest first'));
+        }
+      };
+
       applyLanguage(language);
+
       languageButton.addEventListener('click', () => {
         language = language === 'zh' ? 'en' : 'zh';
         applyLanguage(language);
         updateNoteVisibility();
+        announce(language === 'zh' ? '已切换至中文' : 'Switched to English');
       });
 
       document.querySelectorAll('.filter-button').forEach((filterButton) => {
@@ -655,33 +925,13 @@
           document.querySelectorAll('.filter-button').forEach((item) => item.classList.remove('active'));
           filterButton.classList.add('active');
           updateNoteVisibility();
+          announce(language === 'zh' ? `已筛选：${filterButton.textContent}` : `Filter: ${filterButton.textContent}`);
         });
       });
 
-      const noteGrid = notesSection.querySelector('.notes-grid');
-      const noteCards = Array.from(noteGrid.querySelectorAll('.note-card'));
-      const updateNoteVisibility = () => {
-        const filter = document.querySelector('.filter-button.active')?.dataset.filter || 'all';
-        const query = document.getElementById('noteSearch').value.trim().toLocaleLowerCase();
-        let visibleCount = 0;
-        noteCards.forEach((card) => {
-          const categoryMatches = filter === 'all' || card.dataset.category.split(' ').includes(filter);
-          const searchable = `${card.querySelector('h3').dataset[language]} ${card.querySelector('p').dataset[language]}`.toLocaleLowerCase();
-          card.hidden = !categoryMatches || (query && !searchable.includes(query));
-          if (!card.hidden) visibleCount += 1;
-        });
-        document.getElementById('notesEmpty').hidden = visibleCount !== 0;
-      };
-      document.getElementById('noteSearch').addEventListener('input', updateNoteVisibility);
-      document.getElementById('sortDefault').addEventListener('click', () => {
-        noteCards.forEach((card) => noteGrid.appendChild(card));
-        document.getElementById('sortDefault').classList.add('active');
-        document.getElementById('sortTitle').classList.remove('active');
-      });
-      document.getElementById('sortTitle').addEventListener('click', () => {
-        [...noteCards].sort((a, b) => a.querySelector('h3').dataset[language].localeCompare(b.querySelector('h3').dataset[language], language === 'zh' ? 'zh-CN' : 'en')).forEach((card) => noteGrid.appendChild(card));
-        document.getElementById('sortTitle').classList.add('active');
-        document.getElementById('sortDefault').classList.remove('active');
+      noteSearch.addEventListener('input', updateNoteVisibility);
+      document.querySelectorAll('[data-sort]').forEach((button) => {
+        button.addEventListener('click', () => sortNoteCards(button.dataset.sort));
       });
       document.getElementById('toggleResearch').addEventListener('click', (event) => {
         const compact = topics.classList.toggle('compact');
@@ -689,22 +939,62 @@
         event.currentTarget.dataset.zh = compact ? '展开说明' : '收起说明';
         event.currentTarget.dataset.en = compact ? 'Expand descriptions' : 'Collapse descriptions';
         event.currentTarget.textContent = language === 'zh' ? event.currentTarget.dataset.zh : event.currentTarget.dataset.en;
+        announce(language === 'zh' ? (compact ? '研究说明已收起' : '研究说明已展开') : (compact ? 'Research descriptions collapsed' : 'Research descriptions expanded'));
       });
 
-      const pageToc = document.getElementById('pageToc');
-      const tocCollapse = document.getElementById('tocCollapse');
-      const tocExpand = document.getElementById('tocExpand');
-      const setTocCollapsed = (collapsed) => {
+      const setTocCollapsed = (collapsed, shouldAnnounce = false) => {
         pageToc.classList.toggle('collapsed', collapsed);
+        document.body.classList.toggle('toc-open', !collapsed);
         tocExpand.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+        tocCollapse.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+        window.requestAnimationFrame(syncTocReserve);
+        if (shouldAnnounce) announce(language === 'zh' ? (collapsed ? '目录已收起' : '目录已展开') : (collapsed ? 'Contents collapsed' : 'Contents expanded'));
       };
-      tocCollapse.addEventListener('click', () => setTocCollapsed(true));
-      tocExpand.addEventListener('click', () => setTocCollapsed(false));
+      tocCollapse.addEventListener('click', () => setTocCollapsed(true, true));
+      tocExpand.addEventListener('click', () => setTocCollapsed(false, true));
       const compactTocQuery = window.matchMedia('(max-width: 1250px)');
       setTocCollapsed(compactTocQuery.matches);
-      compactTocQuery.addEventListener('change', (event) => setTocCollapsed(event.matches));
-      document.getElementById('jumpTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-      document.getElementById('jumpBottom').addEventListener('click', () => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' }));
+      const handleTocBreakpoint = (event) => setTocCollapsed(event.matches);
+      if (compactTocQuery.addEventListener) compactTocQuery.addEventListener('change', handleTocBreakpoint);
+      else compactTocQuery.addListener(handleTocBreakpoint);
+
+      const supportsSmoothScroll = 'scrollBehavior' in document.documentElement.style;
+      const scrollBehavior = () => reducedMotionQuery.matches || !supportsSmoothScroll ? 'auto' : 'smooth';
+      const scrollToTarget = (target) => {
+        const navOffset = siteNav.getBoundingClientRect().height + 12;
+        const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - navOffset);
+        if (supportsSmoothScroll) window.scrollTo({ top, behavior: scrollBehavior() });
+        else window.scrollTo(0, top);
+      };
+      const showSectionArrival = (section) => {
+        section.classList.remove('section-arrival');
+        void section.offsetWidth;
+        section.classList.add('section-arrival');
+        window.setTimeout(() => section.classList.remove('section-arrival'), 950);
+      };
+
+      document.querySelectorAll('.toc-links a, .actions a[href^="#"]').forEach((link) => {
+        link.addEventListener('click', (event) => {
+          const target = document.querySelector(link.getAttribute('href'));
+          if (!target) return;
+          event.preventDefault();
+          scrollToTarget(target);
+          showSectionArrival(target);
+          if (window.innerWidth <= 768 && link.closest('.toc-links')) setTocCollapsed(true);
+        });
+      });
+
+      document.getElementById('jumpTop').addEventListener('click', () => {
+        if (supportsSmoothScroll) window.scrollTo({ top: 0, behavior: scrollBehavior() });
+        else window.scrollTo(0, 0);
+        showSectionArrival(document.getElementById('top'));
+      });
+      document.getElementById('jumpBottom').addEventListener('click', () => {
+        if (supportsSmoothScroll) window.scrollTo({ top: document.documentElement.scrollHeight, behavior: scrollBehavior() });
+        else window.scrollTo(0, document.documentElement.scrollHeight);
+        showSectionArrival(document.getElementById('contact'));
+      });
+
       const tocSections = ['top', 'about', 'research', 'notes', 'contact'].map((id) => document.getElementById(id));
       const updateActiveToc = () => {
         const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 12;
@@ -719,16 +1009,60 @@
           }
         }
         if (nearBottom) activeId = 'contact';
-        document.querySelectorAll('.toc-links a').forEach((link) => link.classList.toggle('active', link.dataset.section === activeId));
+        document.querySelectorAll('.toc-links a').forEach((link) => {
+          const isActive = link.dataset.section === activeId;
+          link.classList.toggle('active', isActive);
+          if (isActive) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+        });
       };
+
+      const revealTargets = [...new Set(document.querySelectorAll('.hero, .interest-bar, main > section'))];
+      revealTargets.forEach((section) => section.classList.add('reveal-section'));
+      if ('IntersectionObserver' in window && !reducedMotionQuery.matches) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+        revealTargets.forEach((section) => revealObserver.observe(section));
+      } else {
+        revealTargets.forEach((section) => section.classList.add('is-visible'));
+      }
+
       updateActiveToc();
       window.addEventListener('scroll', updateActiveToc, { passive: true });
-      window.addEventListener('resize', updateActiveToc);
+      window.addEventListener('resize', () => {
+        updateActiveToc();
+        syncTocReserve();
+      });
 
-      document.querySelectorAll('.note-download').forEach(async (download) => {
+      const loadNoteMetadata = async () => {
+        try {
+          const response = await fetch(SITE_CONFIG.noteMetadataPath, { cache: 'no-store' });
+          if (!response.ok) return;
+          const metadata = await response.json();
+          if (!Array.isArray(metadata.notes)) return;
+          metadata.notes.forEach((record) => {
+            if (!record || typeof record.file !== 'string' || typeof record.updated !== 'string' || !record.updated) return;
+            const download = document.querySelector(`.note-download[data-note-file="notes/${record.file}"]`);
+            const card = download?.closest('.note-card');
+            if (card && parseNoteDate(record.updated)) card.dataset.updated = record.updated;
+          });
+        } catch {
+          // The Last-Modified header remains the automatic fallback.
+        }
+      };
+
+      const checkNoteFile = async (download) => {
+        const card = download.closest('.note-card');
         try {
           const response = await fetch(download.dataset.noteFile, { method: 'HEAD', cache: 'no-store' });
           if (!response.ok) throw new Error('missing');
+          const lastModified = response.headers.get('last-modified');
+          if (!card.dataset.updated && lastModified && parseNoteDate(lastModified)) card.dataset.updated = new Date(lastModified).toISOString();
           download.classList.remove('unavailable');
           download.dataset.zh = '下载 PDF';
           download.dataset.en = 'Download PDF';
@@ -739,7 +1073,18 @@
           download.textContent = language === 'zh' ? '暂未上传' : 'Not uploaded';
           download.addEventListener('click', (event) => event.preventDefault());
         }
-      });
+        renderNoteDates();
+      };
+
+      const initializeNoteDates = async () => {
+        await loadNoteMetadata();
+        const checks = Array.from(document.querySelectorAll('.note-download')).map((download) => checkNoteFile(download).catch(() => null));
+        await Promise.all(checks);
+        renderNoteDates();
+        sortNoteCards('newest', false);
+      };
+
+      initializeNoteDates();
 
       const copyText = async (text) => {
         if (navigator.clipboard && window.isSecureContext) {
@@ -762,12 +1107,14 @@
             await copyText(copyButton.dataset.email);
             copyButton.textContent = language === 'zh' ? '已复制' : 'Copied';
             copyButton.classList.add('copied');
+            announce(language === 'zh' ? `已复制邮箱：${copyButton.dataset.email}` : `Copied email: ${copyButton.dataset.email}`);
             window.setTimeout(() => {
               copyButton.textContent = language === 'zh' ? '复制' : 'Copy';
               copyButton.classList.remove('copied');
             }, 1600);
           } catch {
             copyButton.textContent = language === 'zh' ? '复制失败' : 'Failed';
+            announce(language === 'zh' ? '复制失败，请手动复制邮箱' : 'Copy failed; please copy the email manually');
           }
         });
       });
