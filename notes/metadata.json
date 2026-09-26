@@ -1,16 +1,82 @@
 {
+  "schemaVersion": 1,
+  "columns": [
+    {
+      "id": "geometric-representation",
+      "label": {
+        "zh": "几何表示论",
+        "en": "Geometric Representation Theory"
+      },
+      "visible": true
+    },
+    {
+      "id": "algebraic-geometry",
+      "label": {
+        "zh": "代数几何",
+        "en": "Algebraic Geometry"
+      },
+      "visible": true
+    },
+    {
+      "id": "representation-theory",
+      "label": {
+        "zh": "表示论",
+        "en": "Representation Theory"
+      },
+      "visible": true
+    }
+  ],
   "notes": [
     {
       "file": "geometric-satake-notes.pdf",
-      "updated": ""
+      "updated": "",
+      "categories": ["geometric-representation"],
+      "category": {
+        "zh": "几何表示论",
+        "en": "GEOMETRIC REPRESENTATION THEORY"
+      },
+      "title": {
+        "zh": "几何 Satake 学习笔记",
+        "en": "Notes on Geometric Satake"
+      },
+      "description": {
+        "zh": "仿射 Grassmannian、卷积、反常层与 Tannakian 重构。",
+        "en": "Affine Grassmannians, convolution, perverse sheaves, and Tannakian reconstruction."
+      }
     },
     {
       "file": "perverse-sheaves-notes.pdf",
-      "updated": ""
+      "updated": "",
+      "categories": ["algebraic-geometry", "geometric-representation"],
+      "category": {
+        "zh": "代数几何 · 层论",
+        "en": "ALGEBRAIC GEOMETRY · SHEAF THEORY"
+      },
+      "title": {
+        "zh": "反常层学习笔记",
+        "en": "Notes on Perverse Sheaves"
+      },
+      "description": {
+        "zh": "反常 t-结构、交叉上同调与 Verdier 对偶。",
+        "en": "Perverse t-structures, intersection cohomology, and Verdier duality."
+      }
     },
     {
       "file": "springer-theory-notes.pdf",
-      "updated": ""
+      "updated": "",
+      "categories": ["geometric-representation", "representation-theory"],
+      "category": {
+        "zh": "几何表示论 · 表示论",
+        "en": "GEOMETRIC REPRESENTATION THEORY · REPRESENTATION THEORY"
+      },
+      "title": {
+        "zh": "Springer 理论学习笔记",
+        "en": "Notes on Springer Theory"
+      },
+      "description": {
+        "zh": "幂零轨道、Springer 消解、Springer 纤维与 Weyl 群表示。",
+        "en": "Nilpotent orbits, the Springer resolution, Springer fibers, and Weyl group representations."
+      }
     }
   ]
 }
